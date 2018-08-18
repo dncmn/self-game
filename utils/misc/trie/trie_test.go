@@ -1,0 +1,81 @@
+package trie
+
+import (
+	"fmt"
+	"testing"
+)
+
+func TestDirtyWord(t *testing.T) {
+	dw := New()
+	dw.Append("共产党")
+	dw.Append("系统")
+	dw.Append("sb")
+	dw.Append("比")
+	dw.Append("比比")
+	dw.Append("比比的")
+	dw.Append("比比的的的")
+	dw.Append("比较")
+	dw.Append("比较的")
+	testFunc := dw.Replace
+	//	dw.Print()
+	fmt.Println(testFunc("共产党系统"))
+	fmt.Println(testFunc("共产党，系统"))
+	fmt.Println(testFunc("比"))
+	fmt.Println(testFunc("111,共产党比比的.222"))
+	fmt.Println(testFunc("都 比"))
+	fmt.Println(testFunc("xx都 比 "))
+	fmt.Println(testFunc("xx都 比"))
+	fmt.Println(testFunc("xx都 比xx"))
+	fmt.Println(testFunc("xx都比xx"))
+	fmt.Println(testFunc("xx s b xx"))
+	fmt.Println(testFunc("s b"))
+	fmt.Println(testFunc("比douxx 都 "))
+	fmt.Println(testFunc("比douxx 都 s b 哈哈"))
+	fmt.Println(testFunc("比douxx 都 s b"))
+	fmt.Println(testFunc(".s比douxx都 s.b"))
+	fmt.Println(testFunc(".x比douxx 都 s.b"))
+	fmt.Println(testFunc("比比的douxx 都 s.b"))
+	fmt.Println(testFunc("共产党的douxx 都 s.b"))
+	fmt.Println(testFunc("比比较douxx 都 s.b"))
+	fmt.Println(testFunc("比比比比x比的douxx 都 s.b"))
+	fmt.Println(testFunc("x比比比比比比比比比比比比比比比比比比X"))
+	fmt.Println(testFunc("X比比比比比X"))
+	fmt.Println(testFunc("比比比比比"))
+}
+
+func BenchmarkTest1(b *testing.B) {
+	dw := New()
+	dw.Append("共产党")
+	dw.Append("系统")
+	dw.Append("sb")
+	dw.Append("比")
+	dw.Append("比比的")
+	dw.Append("比比的的的")
+	dw.Append("比较")
+	dw.Append("比较的")
+	testFunc := dw.Replace
+	for i := 0; i < b.N; i++ {
+		//	dw.Print()
+		testFunc("共产党系统")
+		testFunc("共产党，系统")
+		testFunc("比")
+		testFunc("比比的")
+		testFunc("都 比")
+		testFunc("xx都 比 ")
+		testFunc("xx都 比")
+		testFunc("xx都 比xx")
+		testFunc("xx都比xx")
+		testFunc("xx s b xx")
+		testFunc("s b")
+		testFunc("比douxx 都 ")
+		testFunc("比douxx 都 s b 哈哈")
+		testFunc("比douxx 都 s b")
+		testFunc(".s比douxx都 s.b")
+		testFunc(".x比douxx 都 s.b")
+		testFunc("比比的douxx 都 s.b")
+		testFunc("共产党的douxx 都 s.b")
+		testFunc("比比较douxx 都 s.b")
+		testFunc("比比比比x比的douxx 都 s.b")
+		testFunc("比比比比比比比比比比比比比比比比比比")
+	}
+}

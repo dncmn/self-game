@@ -1,0 +1,33 @@
+development:
+  mysql:
+    host: 127.0.0.1:3306
+    dbname: game
+    username: root
+    password: password
+    maxOpenConns: 1000
+    maxIdleConns: 200
+    connMaxLifetime: 5
+  env:
+    env: development-env
+test:
+  mysql:
+    host: 127.0.0.1:3306
+    dbname: game
+    username: root
+    password: password
+    maxOpenConns: 1000
+    maxIdleConns: 200
+    connMaxLifetime: 5
+  env:
+    env: test-env
+production:
+  mysql:
+    host: 127.0.0.1:8980
+    dbname: self_game
+    username: mn01
+    password: 123456
+    maxOpenConns: 1000
+    maxIdleConns: 200
+    connMaxLifetime: 5
+  env:
+    env: production-env
