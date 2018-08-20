@@ -3,12 +3,12 @@ package dao
 import (
 	// 导入mysql驱动
 	"fmt"
-	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/log"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"os"
 	"self_game/config"
 	"self_game/model"
+	"log"
 )
 
 var (
@@ -53,7 +53,7 @@ func GetDB() (db *gorm.DB) {
 
 func Migrage() {
 	var err error
-	log.Info("begin create table")
+	log.Println("begin create table")
 	if err = globDb.AutoMigrate(&model.LogLogin{}).Error; err != nil {
 		log.Fatal(err)
 	}
@@ -62,5 +62,5 @@ func Migrage() {
 		log.Fatal(err)
 	}
 
-	log.Info("end create table")
+	log.Println("end create table")
 }
