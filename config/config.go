@@ -59,6 +59,13 @@ type MysqlConfig struct {
 	ConnMaxLifetime time.Duration `yaml:"connMaxLifetime"`
 }
 
+// 项目配置文件
+type CfgConfig struct{
+	Token string  `yaml:"token"`
+	Port int `yaml:"port"`
+}
+
+
 // env 配置文件
 type EnvConfig struct {
 	ENV string `yaml:"env"`
@@ -67,6 +74,7 @@ type EnvConfig struct {
 type ConfigItem struct {
 	Mysql MysqlConfig
 	Env   EnvConfig
+	Cfg CfgConfig
 }
 
 type Conf struct {

@@ -11,7 +11,7 @@ func GetUserNameHandler(c *gin.Context) {
 	fmt.Println("hello")
 
 	c.JSON(http.StatusOK, gin.H{
-		"name": "tom",
+		"name": config.Config.Cfg.Port,
 		"env":  config.Config.Env.ENV,
 	})
 }

@@ -9,6 +9,9 @@ development:
     connMaxLifetime: 5
   env:
     env: development-env
+  cfg:
+    token: aed743c9-a398-4f00-9f54-c2f0599be29e
+    port: 8080
 test:
   mysql:
     host: 127.0.0.1:3306
@@ -20,6 +23,9 @@ test:
     connMaxLifetime: 5
   env:
     env: test-env
+  cfg:
+    token: aed743c9-a398-4f00-9f54-c2f0599be29e
+    port: 8080
 production:
   mysql:
     host: 127.0.0.1:8980
@@ -31,3 +37,6 @@ production:
     connMaxLifetime: 5
   env:
     env: production-env
+  cfg:
+    token: aed743c9-a398-4f00-9f54-c2f0599be29f
+    port: 8080
