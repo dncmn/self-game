@@ -9,11 +9,12 @@ import (
 
 func Router(r *gin.Engine) {
 
-	user := r.Group("/user")
-	r.Use()
-	user.GET("/name", handler.GetUserNameHandler)
-	user.POST("/name/:uid", handler.PostUserNameHandler)
-	user.GET("/health_check", handler.ConsulHealthCheck)
+	user := r.Group("/user",handler.VerifyToken)
+	{
+		user.GET("/name", handler.GetUserNameHandler)
+		user.POST("/name/:uid", handler.PostUserNameHandler)
+		user.GET("/health_check", handler.ConsulHealthCheck)
+	}
 	r.Run(fmt.Sprintf(":%d",config.Config.Cfg.Port))
 
 }
