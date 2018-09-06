@@ -3,7 +3,8 @@ development:
     host: 127.0.0.1:3306
     dbname: game
     username: root
-    password: password
+    password: 123456
+    #password: password
     maxOpenConns: 1000
     maxIdleConns: 200
     connMaxLifetime: 5
@@ -25,7 +26,7 @@ test:
     env: test-env
   cfg:
     token: aed743c9-a398-4f00-9f54-c2f0599be29e
-    port: 8080
+    port: 80
 production:
   mysql:
     host: 127.0.0.1:8980

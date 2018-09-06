@@ -557,7 +557,7 @@ func main() {
 	// Example for binding JSON ({"user": "manu", "password": "123"})
 	router.POST("/loginJSON", func(c *gin.Context) {
 		var json Login
-		if err := c.ShouldBindXML(&json); err != nil {
+		if err := c.ShouldBindJSON(&json); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -750,9 +750,12 @@ See the [detail information](https://github.com/gin-gonic/gin/issues/742#issueco
 ```go
 package main
 
-import "log"
-import "github.com/gin-gonic/gin"
-import "time"
+import (
+	"log"
+	"time"
+
+	"github.com/gin-gonic/gin"
+)
 
 type Person struct {
 	Name     string    `form:"name"`
@@ -988,6 +991,34 @@ func main() {
 
 	// Listen and serve on 0.0.0.0:8080
 	r.Run(":8080")
+}
+```
+
+#### PureJSON
+
+Normally, JSON replaces special HTML characters with their unicode entities, e.g. `<` becomes  `\u003c`. If you want to encode such characters literally, you can use PureJSON instead.
+This feature is unavailable in Go 1.6 and lower.
+
+```go
+func main() {
+	r := gin.Default()
+	
+	// Serves unicode entities
+	r.GET("/json", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"html": "<b>Hello, world!</b>",
+		})
+	})
+	
+	// Serves literal characters
+	r.GET("/purejson", func(c *gin.Context) {
+		c.PureJSON(200, gin.H{
+			"html": "<b>Hello, world!</b>",
+		})
+	})
+	
+	// listen and serve on 0.0.0.0:8080
+	r.Run(":8080)
 }
 ```
 
@@ -1854,5 +1885,6 @@ func TestPingRoute(t *testing.T) {
 
 Awesome project lists using [Gin](https://github.com/gin-gonic/gin) web framework.
 
-* [drone](https://github.com/drone/drone): Drone is a Continuous Delivery platform built on Docker, written in Go
+* [drone](https://github.com/drone/drone): Drone is a Continuous Delivery platform built on Docker, written in Go.
 * [gorush](https://github.com/appleboy/gorush): A push notification server written in Go.
+* [fnproject](https://github.com/fnproject/fn): The container native, cloud agnostic serverless platform.

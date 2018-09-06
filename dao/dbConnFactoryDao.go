@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"log"
 	"os"
 	"self_game/config"
 	"self_game/model"
-	"log"
 )
 
 var (
@@ -59,6 +59,10 @@ func Migrage() {
 	}
 
 	if err = globDb.AutoMigrate(&model.User{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	if err = globDb.AutoMigrate(&model.ConfigLevelTest{}).Error; err != nil {
 		log.Fatal(err)
 	}
 
