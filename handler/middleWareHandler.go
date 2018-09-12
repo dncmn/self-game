@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"self_game/config"
@@ -36,5 +37,19 @@ func SendResponse(c *gin.Context, retData *vo.Data) {
 
 	fmt.Println("reqURL=", c.Request.URL, ", responseBody:", string(resp))
 	c.AbortWithStatusJSON(http.StatusOK, retData)
+	return
+}
+
+// post请求获取请求参数
+func ParsePostBody(c *gin.Context, resp interface{}) (err error) {
+	// 从请求体中获取请求的数据
+	rqt, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		return
+	}
+	fmt.Println("rqt=", rqt, "request body=", string(rqt))
+
+	// 将请求数据绑定到指定的结构体中
+	err = json.Unmarshal(rqt, &resp)
 	return
 }

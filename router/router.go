@@ -20,5 +20,4 @@ func Router(r *gin.Engine) {
 		user.GET("/health_check", handler.ConsulHealthCheck)
 	}
 	r.Run(fmt.Sprintf(":%d", config.Config.Cfg.Port))
-
 }

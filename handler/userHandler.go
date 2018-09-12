@@ -69,15 +69,22 @@ func PostUserNameHandler(c *gin.Context) {
 		uid  string
 	)
 
-	if err = c.BindJSON(&res); err != nil {
+	if err = ParsePostBody(c, &res); err != nil {
 		retData.Data = err.Error()
 		retData.Code = -101
 		return
 	}
+	fmt.Println("name=", res.Name, "english_score=", res.EnglishScore)
 
 	if strings.TrimSpace(res.Name) == "" {
 		retData.Data = "params error"
 		retData.Code = -101
+		fmt.Println("dadadadfa")
+		fmt.Println("dadadadfa")
+		fmt.Println("dadadadfa")
+		fmt.Println("dadadadfa")
+		fmt.Println("dadadadfa")
+		fmt.Println("dadadadfa")
 		return
 	}
 
