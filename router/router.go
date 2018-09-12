@@ -4,16 +4,17 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"self_game/config"
+	_ "self_game/dao"
 	"self_game/handler"
 )
 
 func Router(r *gin.Engine) {
 
-	cc := r.Group("/")
+	cc := r.Group("/api/v1")
 	{
 		cc.GET("/", handler.HandlerSignatureHandler)
 	}
-	user := r.Group("/user", handler.VerifyToken)
+	user := cc.Group("/user", handler.VerifyToken)
 	{
 		user.GET("/name/:uid", handler.GetUserNameHandler)
 		user.POST("/name", handler.PostUserNameHandler)

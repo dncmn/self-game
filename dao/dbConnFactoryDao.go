@@ -9,6 +9,7 @@ import (
 	"os"
 	"self_game/config"
 	"self_game/model"
+	"self_game/utils/logging"
 )
 
 var (
@@ -20,6 +21,7 @@ var (
 		config.Config.Mysql.Dbname,
 	)
 	globDb *gorm.DB
+	logs   = logging.GetLogger()
 )
 
 // 连接数据库
@@ -43,7 +45,7 @@ func init() {
 	if os.Getenv("MIGRATE_DB") == "true" {
 		Migrage()
 	}
-
+	globDb.SetLogger(logging.GetGormLogger())
 }
 
 func GetDB() (db *gorm.DB) {
@@ -53,7 +55,7 @@ func GetDB() (db *gorm.DB) {
 
 func Migrage() {
 	var err error
-	log.Println("begin create table")
+	logs.Info("begin create table")
 	if err = globDb.AutoMigrate(&model.LogLogin{}).Error; err != nil {
 		log.Fatal(err)
 	}
@@ -62,9 +64,5 @@ func Migrage() {
 		log.Fatal(err)
 	}
 
-	if err = globDb.AutoMigrate(&model.ConfigLevelTest{}).Error; err != nil {
-		log.Fatal(err)
-	}
-
-	log.Println("end create table")
+	logs.Info("end create table")
 }

@@ -1,7 +1,6 @@
-这个项目就是自娱自乐
-
+迷你型的demo
 
 用到的知识点
-    1、docker
-    2、gin+mysql
-    3、日志zip(还没添加)
+    1、gin+mysql
+    2、完善的log
+    3、统一解析post请求体和统一的返回体封装

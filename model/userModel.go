@@ -10,6 +10,7 @@ type User struct {
 	ID           string `gorm:"column:id;type:varchar(40);primary_key;" `
 	UserName     string `gorm:"column:user_name;type:varchar(40);"`
 	Password     string `gorm:"column:password;"`
+	Mobile       int    `gorm:"column:mobile"`
 	RegisterIP   string `gorm:"column:register_ip;"`
 	RegosterTime int64  `gorm:"column:register_time"`
 	CreatedAt    time.Time
@@ -19,7 +20,7 @@ type User struct {
 
 // 重命名表名
 func (this *User) TableName() string {
-	return "game_users"
+	return "users"
 }
 
 // 回调中设置主键
