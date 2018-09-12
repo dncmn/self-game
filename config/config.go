@@ -60,11 +60,11 @@ type MysqlConfig struct {
 }
 
 // 项目配置文件
-type CfgConfig struct{
-	Token string  `yaml:"token"`
-	Port int `yaml:"port"`
+type CfgConfig struct {
+	Token    string `yaml:"token"`
+	Port     int    `yaml:"port"`
+	TimeZone string `yaml:"timeZone"`
 }
-
 
 // env 配置文件
 type EnvConfig struct {
@@ -74,7 +74,7 @@ type EnvConfig struct {
 type ConfigItem struct {
 	Mysql MysqlConfig
 	Env   EnvConfig
-	Cfg CfgConfig
+	Cfg   CfgConfig
 }
 
 type Conf struct {

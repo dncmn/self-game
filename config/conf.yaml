@@ -13,6 +13,7 @@ development:
   cfg:
     token: aed743c9-a398-4f00-9f54-c2f0599be29e
     port: 8080
+    timeZone: Asia/Shanghai
 test:
   mysql:
     host: 127.0.0.1:3306
@@ -26,7 +27,8 @@ test:
     env: test-env
   cfg:
     token: aed743c9-a398-4f00-9f54-c2f0599be29e
-    port: 80
+    port: 8080
+    timeZone: Asia/Shanghai
 production:
   mysql:
     host: 127.0.0.1:8980
@@ -41,3 +43,4 @@ production:
   cfg:
     token: aed743c9-a398-4f00-9f54-c2f0599be29f
     port: 8080
+    timeZone: Asia/Shanghai
