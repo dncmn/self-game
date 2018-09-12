@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"self_game/config"
 	"self_game/service"
+	"self_game/utils/vo"
+	"strings"
 )
 
 func HandlerSignatureHandler(c *gin.Context) {
@@ -31,12 +33,25 @@ func HandlerSignatureHandler(c *gin.Context) {
 }
 
 func GetUserNameHandler(c *gin.Context) {
+	retData := &vo.Data{}
+	defer SendResponse(c, retData)
 	fmt.Println("hello")
+	var (
+		uid string
+	)
+	uid = c.Param("uid")
+	if strings.TrimSpace(uid) == "12345" {
+		retData.Code = -101
+		retData.Data = "param error"
+		return
+	}
 
-	c.JSON(http.StatusOK, gin.H{
+	retData.Data = map[string]interface{}{
 		"name": config.Config.Cfg.Port,
 		"env":  config.Config.Env.ENV,
-	})
+	}
+	retData.Code = 1
+	return
 }
 
 func ConsulHealthCheck(c *gin.Context) {
@@ -44,24 +59,35 @@ func ConsulHealthCheck(c *gin.Context) {
 }
 
 func PostUserNameHandler(c *gin.Context) {
-	name := c.Param("uid")
+	retData := vo.NewData()
+	defer SendResponse(c, retData)
 
-	type Res struct {
-		Name string `json:"name"`
-	}
+	var (
+		res  service.PostUserRequest
+		resp service.PostUserResponse
+		err  error
+		uid  string
+	)
 
-	var res Res
-
-	err := c.BindJSON(&res)
-	if err != nil {
-		c.JSON(http.StatusAccepted, gin.H{"error": err})
+	if err = c.BindJSON(&res); err != nil {
+		retData.Data = err.Error()
+		retData.Code = -101
 		return
 	}
-	fmt.Println(name)
-	fmt.Println(name)
-	fmt.Println(name)
-	fmt.Println(name)
-	fmt.Println(name)
 
-	c.JSON(http.StatusOK, gin.H{"name": res.Name})
+	if strings.TrimSpace(res.Name) == "" {
+		retData.Data = "params error"
+		retData.Code = -101
+		return
+	}
+
+	resp.UID = uid
+	resp.Name = res.Name
+	resp.ChineseScore = res.EnglishScore + 2
+	resp.EnglishScore = res.EnglishScore
+	retData.Code = 1
+	retData.Data = map[string]interface{}{
+		"user_info": resp,
+	}
+	return
 }

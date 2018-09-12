@@ -15,8 +15,8 @@ func Router(r *gin.Engine) {
 	}
 	user := r.Group("/user", handler.VerifyToken)
 	{
-		user.GET("/name", handler.GetUserNameHandler)
-		user.POST("/name/:uid", handler.PostUserNameHandler)
+		user.GET("/name/:uid", handler.GetUserNameHandler)
+		user.POST("/name", handler.PostUserNameHandler)
 		user.GET("/health_check", handler.ConsulHealthCheck)
 	}
 	r.Run(fmt.Sprintf(":%d", config.Config.Cfg.Port))
