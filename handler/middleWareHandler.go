@@ -2,18 +2,19 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"self_game/config"
+	"self_game/utils/logging"
 	"self_game/utils/vo"
 )
 
 var (
 	GameToken      = "token"
 	GameTokenValue = config.Config.Cfg.Token
+	logger         = logging.GetLogger()
 )
 
 // 验证token
@@ -35,7 +36,7 @@ func SendResponse(c *gin.Context, retData *vo.Data) {
 		return
 	}
 
-	fmt.Println("reqURL=", c.Request.URL, ", responseBody:", string(resp))
+	logger.Infof("reqURL=%s,responseBody=%v", c.Request.URL, string(resp))
 	c.AbortWithStatusJSON(http.StatusOK, retData)
 	return
 }
@@ -45,9 +46,10 @@ func ParsePostBody(c *gin.Context, resp interface{}) (err error) {
 	// 从请求体中获取请求的数据
 	rqt, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
+		logger.Error(err)
 		return
 	}
-	fmt.Println("rqt=", rqt, "request body=", string(rqt))
+	logger.Infof("request body=%v", string(rqt))
 
 	// 将请求数据绑定到指定的结构体中
 	err = json.Unmarshal(rqt, &resp)

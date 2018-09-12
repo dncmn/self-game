@@ -72,6 +72,7 @@ func PostUserNameHandler(c *gin.Context) {
 	if err = ParsePostBody(c, &res); err != nil {
 		retData.Data = err.Error()
 		retData.Code = -101
+		logger.Error("param error")
 		return
 	}
 	fmt.Println("name=", res.Name, "english_score=", res.EnglishScore)
@@ -79,12 +80,7 @@ func PostUserNameHandler(c *gin.Context) {
 	if strings.TrimSpace(res.Name) == "" {
 		retData.Data = "params error"
 		retData.Code = -101
-		fmt.Println("dadadadfa")
-		fmt.Println("dadadadfa")
-		fmt.Println("dadadadfa")
-		fmt.Println("dadadadfa")
-		fmt.Println("dadadadfa")
-		fmt.Println("dadadadfa")
+		logger.Error("param error")
 		return
 	}
 
@@ -96,5 +92,6 @@ func PostUserNameHandler(c *gin.Context) {
 	retData.Data = map[string]interface{}{
 		"user_info": resp,
 	}
+	logger.Infof("userName=%v,score=%v,responseBody=%v", res.Name, res.EnglishScore, resp)
 	return
 }

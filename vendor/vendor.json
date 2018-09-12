@@ -103,6 +103,18 @@
 			"revisionTime": "2018-01-03T17:44:51Z"
 		},
 		{
+			"checksumSHA1": "mVse81rphxcTRDHBRG1fZnfwJ8w=",
+			"path": "github.com/sirupsen/logrus",
+			"revision": "f3df9aeffda7c12bd9f5a03f9251d75d35993165",
+			"revisionTime": "2018-09-08T09:18:16Z"
+		},
+		{
+			"checksumSHA1": "qpFmfZ8GrD5LQCDt8oocLI24mfI=",
+			"path": "github.com/snaplingo-org/sllog",
+			"revision": "79d7460ca7b7e642b6ca4367dc123512f14e9a6f",
+			"revisionTime": "2018-01-23T08:32:24Z"
+		},
+		{
 			"checksumSHA1": "AqJVYS/Pe4SKQ8Czo9w9S7Yh9X8=",
 			"path": "github.com/tealeg/xlsx",
 			"revision": "f36fa3be8893d528004c0938e06b65c67f69b76f",
@@ -113,6 +125,10 @@
 			"path": "github.com/ugorji/go/codec",
 			"revision": "e253f1f20942cb6dc505e504e8bbba4b7f434cb2",
 			"revisionTime": "2018-08-31T06:23:57Z"
+		},
+		{
+			"path": "golang.org/x/crypto/ssh/terminal",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "/fyGSTHooK5Ez7G597cRNmI5/UM=",
