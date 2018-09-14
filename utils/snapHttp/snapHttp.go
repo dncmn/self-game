@@ -8,8 +8,10 @@ import (
 	"strings"
 	"time"
 
-	logs "log"
+	"self_game/utils/logging"
 )
+
+var logs = logging.GetLogger()
 
 type SnapHttp struct {
 	ReSend  int // 重发次数 default 3
