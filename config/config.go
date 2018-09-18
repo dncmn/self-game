@@ -59,6 +59,13 @@ type MysqlConfig struct {
 	ConnMaxLifetime time.Duration `yaml:"connMaxLifetime"`
 }
 
+// redis configItem
+type RedisConfig struct {
+	Host     string `yaml:"host"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
+}
+
 // 项目配置文件
 type CfgConfig struct {
 	Token    string `yaml:"token"`
@@ -75,6 +82,7 @@ type ConfigItem struct {
 	Mysql MysqlConfig
 	Env   EnvConfig
 	Cfg   CfgConfig
+	Redis RedisConfig
 }
 
 type Conf struct {

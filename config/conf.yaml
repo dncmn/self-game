@@ -14,6 +14,10 @@ development:
     token: aed743c9-a398-4f00-9f54-c2f0599be29e
     port: 8080
     timeZone: Asia/Shanghai
+  redis:
+     host: 127.0.0.1:6379
+     password:
+     db: 0
 test:
   mysql:
     host: 127.0.0.1:3306
@@ -29,6 +33,10 @@ test:
     token: aed743c9-a398-4f00-9f54-c2f0599be29e
     port: 8080
     timeZone: Asia/Shanghai
+ redis:
+    host: 127.0.0.1:6379
+    password:
+    db: 0
 production:
   mysql:
     host: 127.0.0.1:8980
@@ -44,3 +52,7 @@ production:
     token: aed743c9-a398-4f00-9f54-c2f0599be29f
     port: 8080
     timeZone: Asia/Shanghai
+ redis:
+    host: 127.0.0.1:6379
+    password:
+    db: 0

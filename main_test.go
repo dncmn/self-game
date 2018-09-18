@@ -2,11 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/tealeg/xlsx"
 	"net/url"
 	"self_game/dao"
 	"self_game/model"
-	"strings"
 	"testing"
 	"time"
 )
@@ -74,79 +72,79 @@ func TestReadCongi(t *testing.T) {
 	t.Log(data)
 }
 
-func TestInsertLevelTestConfig(t *testing.T) {
-	db := dao.GetDB()
-	fileName := "./aa.xlsx"
-	f, err := xlsx.OpenFile(fileName)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-
-	for _, sheet := range f.Sheets {
-		fmt.Println("sheet name=", strings.TrimSpace(sheet.Name) == "L0")
-
-		level := 0
-		if strings.TrimSpace(sheet.Name) == "L2" {
-			level = 2
-		} else if strings.TrimSpace(sheet.Name) == "L4" {
-			level = 4
-		}
-
-		for _, row := range sheet.Rows {
-			if row.Cells[0].String() == "" || strings.HasPrefix(row.Cells[0].String(), "test") {
-				continue
-			}
-
-			cells := row.Cells
-
-			cfg := model.ConfigLevelTest{}
-			switch cells[0].String() {
-			case "1":
-				n := len(cells)
-				cfg.Level = level
-				cfg.Typ = 1
-				cfg.Index = cells[1].Value
-				cfg.Answer = cells[n-1].Value
-				cfg.ImageList = cells[n-2].Value
-				cfg.VoiceURL = cells[n-4].Value
-			case "2":
-				n := len(cells)
-				cfg.Level = level
-				cfg.Typ = 2
-				cfg.Answer = cells[n-1].Value
-				cfg.Index = cells[1].Value
-
-				if level == 0 {
-					cfg.ChoiceList = cells[4].Value
-					cfg.ImageList = cells[3].Value
-
-				} else {
-					cfg.Text = cells[4].Value
-					cfg.ChoiceList = cells[5].Value
-					cfg.ImageList = cells[7].Value
-
-				}
-			case "3":
-				n := len(cells)
-				cfg.Level = level
-				cfg.Typ = 3
-				cfg.Index = cells[1].Value
-				cfg.Answer = cells[n-1].Value
-				cfg.Text = cells[2].Value
-				cfg.VoiceURL = cells[3].Value
-			default:
-				continue
-			}
-
-			err := db.Create(&cfg).Error
-			if err != nil {
-				t.Error(err)
-				return
-			}
-
-			fmt.Println()
-		}
-	}
-
-}
+//func TestInsertLevelTestConfig(t *testing.T) {
+//	db := dao.GetDB()
+//	fileName := "./aa.xlsx"
+//	f, err := xlsx.OpenFile(fileName)
+//	if err != nil {
+//		t.Error(err)
+//		return
+//	}
+//
+//	for _, sheet := range f.Sheets {
+//		fmt.Println("sheet name=", strings.TrimSpace(sheet.Name) == "L0")
+//
+//		level := 0
+//		if strings.TrimSpace(sheet.Name) == "L2" {
+//			level = 2
+//		} else if strings.TrimSpace(sheet.Name) == "L4" {
+//			level = 4
+//		}
+//
+//		for _, row := range sheet.Rows {
+//			if row.Cells[0].String() == "" || strings.HasPrefix(row.Cells[0].String(), "test") {
+//				continue
+//			}
+//
+//			cells := row.Cells
+//
+//			cfg := model.ConfigLevelTest{}
+//			switch cells[0].String() {
+//			case "1":
+//				n := len(cells)
+//				cfg.Level = level
+//				cfg.Typ = 1
+//				cfg.Index = cells[1].Value
+//				cfg.Answer = cells[n-1].Value
+//				cfg.ImageList = cells[n-2].Value
+//				cfg.VoiceURL = cells[n-4].Value
+//			case "2":
+//				n := len(cells)
+//				cfg.Level = level
+//				cfg.Typ = 2
+//				cfg.Answer = cells[n-1].Value
+//				cfg.Index = cells[1].Value
+//
+//				if level == 0 {
+//					cfg.ChoiceList = cells[4].Value
+//					cfg.ImageList = cells[3].Value
+//
+//				} else {
+//					cfg.Text = cells[4].Value
+//					cfg.ChoiceList = cells[5].Value
+//					cfg.ImageList = cells[7].Value
+//
+//				}
+//			case "3":
+//				n := len(cells)
+//				cfg.Level = level
+//				cfg.Typ = 3
+//				cfg.Index = cells[1].Value
+//				cfg.Answer = cells[n-1].Value
+//				cfg.Text = cells[2].Value
+//				cfg.VoiceURL = cells[3].Value
+//			default:
+//				continue
+//			}
+//
+//			err := db.Create(&cfg).Error
+//			if err != nil {
+//				t.Error(err)
+//				return
+//			}
+//
+//			fmt.Println()
+//		}
+//	}
+//
+//}
