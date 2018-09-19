@@ -1,5 +1,11 @@
 package service
 
+import "self_game/utils/logging"
+
+var (
+	logger = logging.GetLogger()
+)
+
 // write request and response struct
 
 type PostUserRequest struct {

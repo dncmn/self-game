@@ -1,4 +1,4 @@
-package dao
+package compoments
 
 import (
 	// 导入mysql驱动
@@ -41,7 +41,7 @@ func init() {
 		globDb.LogMode(true)
 	}
 
-	// 创建表
+	// 创建表 MIGRATE_DB=true
 	if os.Getenv("MIGRATE_DB") == "true" {
 		Migrage()
 	}

@@ -4,12 +4,11 @@ import (
 	"github.com/go-redis/redis"
 	"log"
 	"self_game/config"
-	"self_game/utils/logging"
+	"self_game/constants/redisKey"
 	"time"
 )
 
 var redisClient *RedisInstance
-var logs = logging.GetLogger()
 
 type RedisInstance struct {
 	RedisCli *redis.Client
@@ -60,4 +59,44 @@ func initRedisClient() (ri *RedisInstance) {
 	}()
 	redisInstance.RedisCli = redisCli
 	return ri
+}
+
+//Set 设置redisKey
+func (ri *RedisInstance) Set(rk *redisKey.RedisKeyInfo, args string, value interface{}, expires ...time.Duration) (err error) {
+	expire := rk.Expire
+	if len(expires) > 0 {
+		expire = expires[0]
+	}
+	err = ri.RedisCli.Set(rk.GetStrKey(args), value, expire).Err()
+	return
+}
+
+//Get 获取redis数据
+func (ri *RedisInstance) Get(rk *redisKey.RedisKeyInfo, args string) (result string, keyExist bool, err error) {
+	result, err = ri.RedisCli.Get(rk.GetStrKey(args)).Result()
+	if err != nil {
+		if err == redis.Nil {
+			return result, false, nil
+		}
+		return result, false, err
+	}
+	return result, true, nil
+}
+
+//HSet hset设置redisKey
+func (ri *RedisInstance) HSet(rk *redisKey.RedisKeyInfo, args string, field string, value interface{}) (err error) {
+	err = ri.RedisCli.HSet(rk.GetStrKey(args), field, value).Err()
+	return
+}
+
+//HGet hget获取redis数据
+func (ri *RedisInstance) HGet(rk *redisKey.RedisKeyInfo, args string, field string) (result string, err error) {
+	result, err = ri.RedisCli.HGet(rk.GetStrKey(args), field).Result()
+	return
+}
+
+//Del 删除key数据
+func (ri *RedisInstance) Del(rk *redisKey.RedisKeyInfo, args string) (err error) {
+	err = ri.RedisCli.Del(rk.GetStrKey(args)).Err()
+	return
 }
