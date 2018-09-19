@@ -3,16 +3,20 @@ package model
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/satori/go.uuid"
+	"self_game/constants"
 	"time"
 )
 
 type User struct {
-	ID           string `gorm:"column:id;type:varchar(40);primary_key;" `
-	UserName     string `gorm:"column:user_name;type:varchar(40);"`
-	Password     string `gorm:"column:password;"`
-	Mobile       int    `gorm:"column:mobile"`
-	RegisterIP   string `gorm:"column:register_ip;"`
-	RegosterTime int64  `gorm:"column:register_time"`
+	ID           string                `gorm:"column:id;type:varchar(40);primary_key;" `
+	UserName     string                `gorm:"column:user_name;type:varchar(40);"`
+	Sex          constants.UserSexType `gorm:"column:sex"`
+	Country      string                `gorm:"column:country"`
+	City         string                `gorm:"column:city"`
+	Password     string                `gorm:"column:password;"`
+	Mobile       string                `gorm:"column:mobile"`
+	RegisterIP   string                `gorm:"column:register_ip;"`
+	RegosterTime int64                 `gorm:"column:register_time"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    *time.Time `sql:"index"`

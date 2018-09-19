@@ -3,21 +3,14 @@ package main
 import (
 	"fmt"
 	"net/url"
-	"self_game/dao"
+	"self_game/compoments"
+	"self_game/config"
 	"self_game/model"
+	"self_game/utils"
+	"self_game/utils/taobaoIP"
 	"testing"
 	"time"
 )
-
-// signature=d9687d4fa07bbefe27beade52723d3d745553ba6&echostr=6699841386932337635&timestamp=1536145698&nonce=441907582
-func TestJiaMi(t *testing.T) {
-
-	signature := ""
-	echostr := ""
-	timestamp := 0
-	nonce := 0
-	fmt.Println(signature, echostr, timestamp, nonce)
-}
 
 func TestURL(t *testing.T) {
 	//rs := url.QueryEscape()
@@ -31,8 +24,8 @@ func TestURL(t *testing.T) {
 		return
 	}
 
-	pl.Query() = params
-	fmt.Println(pl.Query())
+	//pl.Query() = params
+	//fmt.Println(pl.Query())
 
 	fmt.Println(pl.RawQuery)
 
@@ -58,7 +51,7 @@ func TestTimeZone(t *testing.T) {
 }
 
 func TestReadCongi(t *testing.T) {
-	db := dao.GetDB()
+	db := compoments.GetDB()
 	data := model.LogLogin{}
 	data.UID = "test003"
 	data.UserName = "name004"
@@ -72,79 +65,35 @@ func TestReadCongi(t *testing.T) {
 	t.Log(data)
 }
 
-//func TestInsertLevelTestConfig(t *testing.T) {
-//	db := dao.GetDB()
-//	fileName := "./aa.xlsx"
-//	f, err := xlsx.OpenFile(fileName)
-//	if err != nil {
-//		t.Error(err)
-//		return
-//	}
-//
-//	for _, sheet := range f.Sheets {
-//		fmt.Println("sheet name=", strings.TrimSpace(sheet.Name) == "L0")
-//
-//		level := 0
-//		if strings.TrimSpace(sheet.Name) == "L2" {
-//			level = 2
-//		} else if strings.TrimSpace(sheet.Name) == "L4" {
-//			level = 4
-//		}
-//
-//		for _, row := range sheet.Rows {
-//			if row.Cells[0].String() == "" || strings.HasPrefix(row.Cells[0].String(), "test") {
-//				continue
-//			}
-//
-//			cells := row.Cells
-//
-//			cfg := model.ConfigLevelTest{}
-//			switch cells[0].String() {
-//			case "1":
-//				n := len(cells)
-//				cfg.Level = level
-//				cfg.Typ = 1
-//				cfg.Index = cells[1].Value
-//				cfg.Answer = cells[n-1].Value
-//				cfg.ImageList = cells[n-2].Value
-//				cfg.VoiceURL = cells[n-4].Value
-//			case "2":
-//				n := len(cells)
-//				cfg.Level = level
-//				cfg.Typ = 2
-//				cfg.Answer = cells[n-1].Value
-//				cfg.Index = cells[1].Value
-//
-//				if level == 0 {
-//					cfg.ChoiceList = cells[4].Value
-//					cfg.ImageList = cells[3].Value
-//
-//				} else {
-//					cfg.Text = cells[4].Value
-//					cfg.ChoiceList = cells[5].Value
-//					cfg.ImageList = cells[7].Value
-//
-//				}
-//			case "3":
-//				n := len(cells)
-//				cfg.Level = level
-//				cfg.Typ = 3
-//				cfg.Index = cells[1].Value
-//				cfg.Answer = cells[n-1].Value
-//				cfg.Text = cells[2].Value
-//				cfg.VoiceURL = cells[3].Value
-//			default:
-//				continue
-//			}
-//
-//			err := db.Create(&cfg).Error
-//			if err != nil {
-//				t.Error(err)
-//				return
-//			}
-//
-//			fmt.Println()
-//		}
-//	}
-//
-//}
+func TestMobileCheck(t *testing.T) {
+	s := []string{"18505921256", "13489594009", "d557"}
+	for _, v := range s {
+		fmt.Println(utils.CheckMobileIsLegal(v))
+	}
+}
+
+func TestJiaMi(t *testing.T) {
+	str := "helo"
+	fmt.Println(utils.EncodeMD5(str))
+}
+
+func TestGetCountryAndCity(t *testing.T) {
+	ip := "219.142.86.84"
+	country, city, err := taobaoIP.GetCountryAndCity(ip)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println("country=", country, " city=", city)
+}
+
+func TestTimeGet(t *testing.T) {
+	n := time.Now()
+	fmt.Println(n.Unix(), n.UnixNano()/1e6)
+
+	tl, _ := time.LoadLocation(config.Config.Cfg.TimeZone)
+	fmt.Println(time.Now().In(tl).Format("2006-01-02 15:04:05"))
+
+	tm, _ := time.LoadLocation("America/Los_Angeles")
+	fmt.Println(time.Now().In(tm).Format("2006-01-02 15:04:05"))
+}

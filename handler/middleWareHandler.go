@@ -49,9 +49,13 @@ func ParsePostBody(c *gin.Context, resp interface{}) (err error) {
 		logger.Error(err)
 		return
 	}
-	logger.Infof("request body=%v", string(rqt))
-
+	logger.Infof("[Request Url Body] req:%s url:%s  body:%s", c.GetString("reqID"),
+		c.Request.RequestURI, string(rqt))
 	// 将请求数据绑定到指定的结构体中
-	err = json.Unmarshal(rqt, &resp)
+	err = json.Unmarshal(rqt, resp)
+	if err != nil {
+		logger.Error(err)
+	}
+	logger.Info(err)
 	return
 }

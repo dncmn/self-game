@@ -51,7 +51,7 @@ production:
   cfg:
     token: aed743c9-a398-4f00-9f54-c2f0599be29f
     port: 8080
-    timeZone: Asia/Shanghai
+    timeZone: America/Los_Angeles
   redis:
     host: 127.0.0.1:6379
     password:

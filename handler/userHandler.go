@@ -3,12 +3,72 @@ package handler
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
+	"gitlab.oss.snaplingo.com/server-team/common/utils/async"
 	"net/http"
 	"self_game/config"
+	"self_game/constants/gameCode"
 	"self_game/service"
+	"self_game/utils"
 	"self_game/utils/vo"
 	"strings"
 )
+
+// 用户注册
+func RegisterUserHandler(c *gin.Context) {
+	retData := &vo.Data{}
+	defer SendResponse(c, retData)
+
+	var (
+		err         error
+		requestBody service.UserRegisterReq
+		uid         string
+	)
+
+	if err = ParsePostBody(c, &requestBody); err != nil {
+		logger.Errorf("uname=%v,err=%v", requestBody.UserName, err.Error())
+		retData.Code = gameCode.RequestParamsError
+		return
+	}
+	if err = service.CheckUserRegisterParams(requestBody); err != nil {
+		retData.Code = gameCode.RequestParamsError
+		logger.Error(err)
+		return
+	}
+	// 检查该用户是否存在
+	err = service.CheckUserIsExist(requestBody.UserName)
+	if err != nil {
+		if err != gorm.ErrRecordNotFound {
+			retData.Code = gameCode.UserNameAlreadyExist
+			logger.Error(err)
+			return
+		}
+	}
+
+	// save user to db
+	if uid, err = service.InsertUserToDB(requestBody); err != nil {
+		retData.Code = gameCode.RequestParamsError
+		return
+	}
+
+	// 更改玩家的ip,国家和城市
+	go async.Do(func() {
+		ip := c.ClientIP()
+		err = service.UpdateUserCountryAndCity(uid, ip)
+		if err != nil {
+			logger.Errorf("ip=%v,err=%v", ip, err)
+			return
+		}
+	})
+
+	logger.Infof("userRegister:%v", requestBody)
+	retData.Data = map[string]interface{}{
+		"uid":           uid,
+		"register_time": utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).Format("2006-01-02 15:04:05"),
+	}
+	retData.Code = gameCode.RequestSuccess
+	return
+}
 
 func HandlerSignatureHandler(c *gin.Context) {
 	var (
