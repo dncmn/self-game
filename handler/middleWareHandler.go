@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"self_game/config"
+	"self_game/constants/gameCode"
 	"self_game/utils/logging"
 	"self_game/utils/vo"
 )
@@ -19,9 +19,12 @@ var (
 
 // 验证token
 func VerifyToken(c *gin.Context) {
+	retData := vo.NewData()
+
 	if c.Request.Header.Get(GameToken) != GameTokenValue {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "token error"})
-		log.Println("token error")
+		retData.Code = gameCode.RequestTokenError
+		c.JSON(http.StatusBadRequest, retData)
+		logger.Error("token error")
 		c.Abort()
 		return
 	}

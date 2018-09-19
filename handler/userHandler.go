@@ -14,15 +14,23 @@ import (
 	"strings"
 )
 
+// 用户登录
+func UserLoginHandler(c *gin.Context) {
+	retData := vo.NewData()
+	defer SendResponse(c, retData)
+	return
+}
+
 // 用户注册
 func RegisterUserHandler(c *gin.Context) {
 	retData := &vo.Data{}
 	defer SendResponse(c, retData)
 
 	var (
-		err         error
-		requestBody service.UserRegisterReq
-		uid         string
+		err          error
+		requestBody  service.UserRegisterReq
+		registerResp service.UserRegisterResp
+		uid          string
 	)
 
 	if err = ParsePostBody(c, &requestBody); err != nil {
@@ -61,12 +69,11 @@ func RegisterUserHandler(c *gin.Context) {
 		}
 	})
 
-	logger.Infof("userRegister:%v", requestBody)
-	retData.Data = map[string]interface{}{
-		"uid":           uid,
-		"register_time": utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).Format("2006-01-02 15:04:05"),
-	}
+	registerResp.UID = uid
+	registerResp.RegisterTme = utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).Format("2006-01-02 15:04:05")
+	retData.Data = registerResp
 	retData.Code = gameCode.RequestSuccess
+	logger.Infof("userRegister:%v", requestBody)
 	return
 }
 

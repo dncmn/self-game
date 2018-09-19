@@ -17,6 +17,7 @@ func Router(r *gin.Engine) {
 	user := cc.Group("/user", handler.VerifyToken)
 	{
 		user.POST("/register", handler.RegisterUserHandler)
+		user.POST("login", handler.UserLoginHandler)
 		user.GET("/name/:uid", handler.GetUserNameHandler)
 		user.POST("/name", handler.PostUserNameHandler)
 		user.GET("/health_check", handler.ConsulHealthCheck)

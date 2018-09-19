@@ -33,4 +33,6 @@ type UserRegisterReq struct {
 }
 
 type UserRegisterResp struct {
+	UID         string `json:"uid"`
+	RegisterTme string `json:"register_tme"`
 }
