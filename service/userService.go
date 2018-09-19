@@ -44,6 +44,22 @@ func GetUserByUID(uid string) (user interface{}, err error) {
 
 }
 
+// 检查用户信息
+func CheckUserExist(name, password string) (user model.User, err error) {
+
+	password = utils.EncodeMD5(password)
+
+	err = gloDB.Model(&model.User{}).Where("user_name=? and password=?", name, password).
+		First(&user).Error
+	if err != nil {
+		err = errors.New("user login error")
+		logger.Errorf("username=%v,login error.err=%v", err.Error())
+		return
+	}
+
+	return
+}
+
 // 查询国家和城市
 func UpdateUserCountryAndCity(uid, ip string) (err error) {
 	country, city, err := taobaoIP.GetCountryAndCity(ip)

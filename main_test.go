@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"self_game/compoments"
 	"self_game/config"
+	"self_game/constants/redisKey"
 	"self_game/model"
 	"self_game/utils"
 	"self_game/utils/taobaoIP"
@@ -96,4 +97,21 @@ func TestTimeGet(t *testing.T) {
 
 	tm, _ := time.LoadLocation("America/Los_Angeles")
 	fmt.Println(time.Now().In(tm).Format("2006-01-02 15:04:05"))
+}
+
+func TestLinkRedisServer(t *testing.T) {
+	redisCli := compoments.GetRedisClient()
+	//err := redisCli.Set(redisKey.UserToken, "hello", 0)
+	//if err != nil {
+	//	t.Error(err)
+	//	return
+	//}
+
+	res, ok, err := redisCli.Get(redisKey.UserToken, "hello")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println(res, ok)
+	fmt.Println("success")
 }

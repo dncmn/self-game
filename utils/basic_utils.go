@@ -3,7 +3,6 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
 	"io"
 	"regexp"
 	"strings"
@@ -29,7 +28,6 @@ func IsStringEmpty(v string) (ok bool) {
 // 用户注册时的md5加密
 func EncodeMD5(pwd string) (result string) {
 	h := md5.New()
-	pwd = fmt.Sprint("self_game", pwd)
 	io.WriteString(h, pwd)
 	result = hex.EncodeToString(h.Sum(nil))
 	return

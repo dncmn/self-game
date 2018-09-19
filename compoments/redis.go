@@ -58,6 +58,7 @@ func initRedisClient() (ri *RedisInstance) {
 		}
 	}()
 	redisInstance.RedisCli = redisCli
+	ri = &redisInstance
 	return ri
 }
 

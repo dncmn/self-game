@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -8,6 +9,8 @@ import (
 	"net/http"
 	"self_game/config"
 	"self_game/constants/gameCode"
+	"self_game/dao"
+	"self_game/model"
 	"self_game/service"
 	"self_game/utils"
 	"self_game/utils/vo"
@@ -18,6 +21,42 @@ import (
 func UserLoginHandler(c *gin.Context) {
 	retData := vo.NewData()
 	defer SendResponse(c, retData)
+	var (
+		body  service.UserLoginReq
+		resp  service.UserLoginResp
+		token string
+		err   error
+		user  model.User
+	)
+
+	if err = ParsePostBody(c, &body); err != nil {
+		retData.Code = gameCode.RequestLoginUserOrPasswordError
+		logger.Error(errors.New("name or password error"))
+		return
+	}
+
+	if user, err = service.CheckUserExist(body.UserName, body.Password); err != nil {
+		retData.Code = gameCode.RequestLoginUserOrPasswordError
+		logger.Error(errors.New("name or password error"))
+		return
+	}
+
+	token, err = dao.SetUserToken(user.ID, 0)
+	if err != nil {
+		retData.Code = gameCode.RequestParamsError
+		logger.Errorf("user_login:save userToken error:uid[%v] err=[%v]", user.ID, err)
+		return
+	}
+
+	resp.UserName = user.UserName
+	resp.UID = user.ID
+	resp.Mobile = user.Mobile
+	resp.City = user.City
+	resp.Country = user.Country
+	resp.Token = token
+	retData.Code = gameCode.RequestSuccess
+	retData.Data = resp
+
 	return
 }
 

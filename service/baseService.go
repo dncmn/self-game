@@ -24,6 +24,21 @@ type PostUserResponse struct {
 	ChineseScore int    `json:"chinese_score"`
 }
 
+// 用户登陆
+type UserLoginReq struct {
+	UserName string `json:"user_name"`
+	Password string `json:"password"`
+}
+
+type UserLoginResp struct {
+	UID      string `json:"uid"`
+	UserName string `json:"user_name"`
+	Country  string `json:"country"`
+	City     string `json:"city"`
+	Mobile   string `json:"mobile"`
+	Token    string `json:"token"`
+}
+
 // 用户注册
 type UserRegisterReq struct {
 	UserName string                `json:"user_name"`
