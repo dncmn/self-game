@@ -10,14 +10,20 @@ import (
 
 func Router(r *gin.Engine) {
 
-	cc := r.Group("/api/v1")
+	cc := r.Group("/api/v1", handler.VerifyToken)
 	{
 		cc.GET("/", handler.HandlerSignatureHandler)
+
 	}
+
+	userLoginGroup := cc.Group("/anonymous")
+	{
+		userLoginGroup.POST("/user/register", handler.RegisterUserHandler)
+		userLoginGroup.POST("/user/login", handler.UserLoginHandler)
+	}
+
 	user := cc.Group("/user", handler.VerifyToken)
 	{
-		user.POST("/register", handler.RegisterUserHandler)
-		user.POST("login", handler.UserLoginHandler)
 		user.GET("/name/:uid", handler.GetUserNameHandler)
 		user.POST("/name", handler.PostUserNameHandler)
 		user.GET("/health_check", handler.ConsulHealthCheck)

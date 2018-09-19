@@ -107,7 +107,7 @@ func TestLinkRedisServer(t *testing.T) {
 	//	return
 	//}
 
-	res, ok, err := redisCli.Get(redisKey.UserToken, "hello")
+	res, ok, err := redisCli.Get(redisKey.UserToken, "936dd200-3ea6-4c0a-9943-1f2fa844470a")
 	if err != nil {
 		t.Error(err)
 		return

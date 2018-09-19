@@ -59,6 +59,5 @@ func ParsePostBody(c *gin.Context, resp interface{}) (err error) {
 	if err != nil {
 		logger.Error(err)
 	}
-	logger.Info(err)
 	return
 }

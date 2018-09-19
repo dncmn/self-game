@@ -47,7 +47,7 @@ func UserLoginHandler(c *gin.Context) {
 		logger.Errorf("user_login:save userToken error:uid[%v] err=[%v]", user.ID, err)
 		return
 	}
-
+	logger.Infof("createUserToken:uid[%v],token[%v]", user.ID, token)
 	resp.UserName = user.UserName
 	resp.UID = user.ID
 	resp.Mobile = user.Mobile
