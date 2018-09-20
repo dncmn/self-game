@@ -10,12 +10,13 @@ import (
 
 func Router(r *gin.Engine) {
 
-	cc := r.Group("/api/v1", handler.VerifyToken)
+	wxServerCheck:= r.Group("/api/v2")
 	{
-		cc.GET("/", handler.HandlerSignatureHandler)
+		wxServerCheck.GET("/", handler.HandlerSignatureHandler)
 
 	}
 
+	cc:=r.Group("/api/v1",handler.VerifyToken)
 	userLoginGroup := cc.Group("/anonymous")
 	{
 		userLoginGroup.POST("/user/register", handler.RegisterUserHandler)

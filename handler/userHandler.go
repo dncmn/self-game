@@ -138,8 +138,8 @@ func HandlerSignatureHandler(c *gin.Context) {
 	var (
 		signature string
 		echostr   string
-		timestamp int
-		nonce     int
+		timestamp string
+		nonce     string
 		err       error
 	)
 

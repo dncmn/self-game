@@ -9,11 +9,10 @@ import (
 	"self-game/model"
 	"self-game/utils"
 	"self-game/utils/taobaoIP"
-	"strconv"
 	"strings"
 )
 
-func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, nonce int, err error) {
+func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, nonce string, err error) {
 	if signature = c.Query("signature"); strings.TrimSpace(signature) == "" {
 		err = errors.New("params error")
 		logger.Error(err)
@@ -25,12 +24,12 @@ func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, n
 		return
 	}
 
-	if timestamp, err = strconv.Atoi(c.Query("timestamp")); err != nil {
+	if timestamp = c.Query("timestamp");  strings.TrimSpace(timestamp) == "" {
 		err = errors.New("params error")
 		logger.Error(err)
 		return
 	}
-	if nonce, err = strconv.Atoi(c.Query("nonce")); err != nil {
+	if nonce= c.Query("nonce");  strings.TrimSpace(nonce) == "" {
 		err = errors.New("params error")
 		logger.Error(err)
 		return
