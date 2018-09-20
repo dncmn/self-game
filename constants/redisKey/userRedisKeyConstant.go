@@ -29,7 +29,7 @@ const (
 var (
 	// UserToken 用户令牌 根据用户id 来获取token: UserToken + uid
 	UserToken = &RedisKeyInfo{
-		Key:    "userToken",
+		Key:    "userToken:",
 		Expire: 0,
 	}
 	// UserIDByToken 用户令牌 根据用户Token获取用户ID UserIdByToken + token

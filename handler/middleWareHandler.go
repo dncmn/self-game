@@ -7,20 +7,55 @@ import (
 	"net/http"
 	"self_game/config"
 	"self_game/constants/gameCode"
+	"self_game/service"
+	"self_game/utils"
 	"self_game/utils/logging"
 	"self_game/utils/vo"
 )
 
 var (
-	GameToken      = "token"
-	GameTokenValue = config.Config.Cfg.Token
-	logger         = logging.GetLogger()
+	GameToken           = "token"
+	UserToken           = "UserToken"
+	GameTokenValue      = config.Config.Cfg.Token
+	logger              = logging.GetLogger()
+	ContextKeyAppUID    = "appuid"
+	ContextKeyUserToken = "userToken"
 )
+
+// 验证userToken
+func VerifyUserToken(c *gin.Context) {
+	var (
+		userToken string
+		uid       string
+		err       error
+		retData   = vo.NewData()
+	)
+
+	if userToken = c.Request.Header.Get(UserToken); utils.IsStringEmpty(userToken) {
+		retData.Code = gameCode.RequestTokenError
+		c.JSON(http.StatusBadRequest, retData)
+		logger.Error("token error")
+		c.Abort()
+		return
+	}
+
+	uid, err = service.GetUIDByUserToken(userToken)
+	if err != nil {
+		retData.Code = gameCode.RequestTokenError
+		c.JSON(http.StatusBadRequest, retData)
+		logger.Error("token error")
+		c.Abort()
+		return
+	}
+	logger.Infof("set uid %v", uid)
+	c.Set(ContextKeyAppUID, uid)
+	c.Set(ContextKeyUserToken, userToken)
+	c.Next()
+}
 
 // 验证token
 func VerifyToken(c *gin.Context) {
 	retData := vo.NewData()
-
 	if c.Request.Header.Get(GameToken) != GameTokenValue {
 		retData.Code = gameCode.RequestTokenError
 		c.JSON(http.StatusBadRequest, retData)

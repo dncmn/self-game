@@ -22,7 +22,7 @@ func Router(r *gin.Engine) {
 		userLoginGroup.POST("/user/login", handler.UserLoginHandler)
 	}
 
-	user := cc.Group("/user", handler.VerifyToken)
+	user := cc.Group("/user", handler.VerifyUserToken)
 	{
 		user.GET("/name/:uid", handler.GetUserNameHandler)
 		user.POST("/name", handler.PostUserNameHandler)

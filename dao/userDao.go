@@ -9,10 +9,22 @@ import (
 	"time"
 )
 
-// 设置userToken
+// userToken检验
+func GetUserIDByUserToken(token string) (uid string, isExist bool, err error) {
+	token, isExist, err = redisClient.Get(redisKey.UserIDByToken, token)
+	return
+}
+
+// 设置userToken  key:value(uid:userToken)
 func SetUserToken(uid string, expireDate time.Duration) (token string, err error) {
 	token = utils.EncodeMD5(fmt.Sprintf("%v%v", uid, time.Now().Unix()))
 	err = redisClient.Set(redisKey.UserToken, uid, token, expireDate)
+	return
+}
+
+// 设置token--->uid
+func SetUserIDByToken(uid, token string) (err error) {
+	err = redisClient.Set(redisKey.UserIDByToken, token, uid)
 	return
 }
 

@@ -44,6 +44,25 @@ func GetUserByUID(uid string) (user interface{}, err error) {
 
 }
 
+// 通过userToken获取uid
+func GetUIDByUserToken(token string) (uid string, err error) {
+
+	var (
+		ok bool
+	)
+	uid, ok, err = dao.GetUserIDByUserToken(token)
+	if err != nil {
+		logger.Errorf("token=%v,err=%v", token, err.Error())
+		return
+	}
+	if !ok {
+		err = errors.New("uid not found")
+		logger.Errorf("token=%v,err=%v", token, err.Error())
+		return
+	}
+	return
+}
+
 // 检查用户信息
 func CheckUserExist(name, password string) (user model.User, err error) {
 

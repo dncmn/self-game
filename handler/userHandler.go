@@ -41,12 +41,22 @@ func UserLoginHandler(c *gin.Context) {
 		return
 	}
 
+	// 设置 uid-->token
 	token, err = dao.SetUserToken(user.ID, 0)
 	if err != nil {
 		retData.Code = gameCode.RequestParamsError
 		logger.Errorf("user_login:save userToken error:uid[%v] err=[%v]", user.ID, err)
 		return
 	}
+
+	// 设置token-->uid
+	err = dao.SetUserIDByToken(user.ID, token)
+	if err != nil {
+		retData.Code = gameCode.RequestParamsError
+		logger.Errorf("user_login:save userToken error:uid[%v] err=[%v]", user.ID, err)
+		return
+	}
+
 	logger.Infof("createUserToken:uid[%v],token[%v]", user.ID, token)
 	resp.UserName = user.UserName
 	resp.UID = user.ID
