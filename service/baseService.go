@@ -1,9 +1,9 @@
 package service
 
 import (
-	"self_game/compoments"
-	"self_game/constants"
-	"self_game/utils/logging"
+	"self-game/compoments"
+	"self-game/constants"
+	"self-game/utils/logging"
 )
 
 var (

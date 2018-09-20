@@ -3,12 +3,12 @@ package service
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"self_game/config"
-	"self_game/constants"
-	"self_game/dao"
-	"self_game/model"
-	"self_game/utils"
-	"self_game/utils/taobaoIP"
+	"self-game/config"
+	"self-game/constants"
+	"self-game/dao"
+	"self-game/model"
+	"self-game/utils"
+	"self-game/utils/taobaoIP"
 	"strconv"
 	"strings"
 )

@@ -2,10 +2,10 @@ package dao
 
 import (
 	"fmt"
-	"self_game/constants"
-	"self_game/constants/redisKey"
-	"self_game/model"
-	"self_game/utils"
+	"self-game/constants"
+	"self-game/constants/redisKey"
+	"self-game/model"
+	"self-game/utils"
 	"time"
 )
 

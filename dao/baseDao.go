@@ -2,8 +2,8 @@ package dao
 
 import (
 	"github.com/jinzhu/gorm"
-	"self_game/compoments"
-	"self_game/utils/logging"
+	"self-game/compoments"
+	"self-game/utils/logging"
 )
 
 var (

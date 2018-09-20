@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"net/url"
-	"self_game/compoments"
-	"self_game/config"
-	"self_game/constants/redisKey"
-	"self_game/model"
-	"self_game/utils"
-	"self_game/utils/taobaoIP"
+	"self-game/compoments"
+	"self-game/config"
+	"self-game/constants/redisKey"
+	"self-game/model"
+	"self-game/utils"
+	"self-game/utils/taobaoIP"
 	"testing"
 	"time"
 )

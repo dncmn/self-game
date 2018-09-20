@@ -3,9 +3,9 @@ package router
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"self_game/config"
-	_ "self_game/dao"
-	"self_game/handler"
+	"self-game/config"
+	_ "self-game/dao"
+	"self-game/handler"
 )
 
 func Router(r *gin.Engine) {

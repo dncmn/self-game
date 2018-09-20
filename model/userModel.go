@@ -3,7 +3,7 @@ package model
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/satori/go.uuid"
-	"self_game/constants"
+	"self-game/constants"
 	"time"
 )
 

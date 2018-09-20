@@ -1,8 +1,8 @@
 package taobaoIP
 
 import (
-	"self_game/utils/logging"
-	"self_game/utils/snapHttp"
+	"self-game/utils/logging"
+	"self-game/utils/snapHttp"
 	"strings"
 )
 

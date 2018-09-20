@@ -40,7 +40,7 @@ test:
 production:
   mysql:
     host: 127.0.0.1:8980
-    dbname: self_game
+    dbname: self-game
     username: mn01
     password: 123456
     maxOpenConns: 1000

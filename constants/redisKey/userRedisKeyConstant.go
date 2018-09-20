@@ -22,8 +22,8 @@ const (
 	mBot  RedisModule = "bot"
 )
 const (
-	//ProjectApi self_game项目
-	ProjectApi Project = "self_game"
+	//ProjectApi self-game项目
+	ProjectApi Project = "self-game"
 )
 
 var (

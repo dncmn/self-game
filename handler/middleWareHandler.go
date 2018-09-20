@@ -5,12 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
-	"self_game/config"
-	"self_game/constants/gameCode"
-	"self_game/service"
-	"self_game/utils"
-	"self_game/utils/logging"
-	"self_game/utils/vo"
+	"self-game/config"
+	"self-game/constants/gameCode"
+	"self-game/service"
+	"self-game/utils"
+	"self-game/utils/logging"
+	"self-game/utils/vo"
 )
 
 var (

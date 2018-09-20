@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"self_game/router"
+	"self-game/router"
 )
 
 func main() {

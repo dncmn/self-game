@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"self_game/utils"
+	"self-game/utils"
 	"time"
 )
 

@@ -3,8 +3,8 @@ package compoments
 import (
 	"github.com/go-redis/redis"
 	"log"
-	"self_game/config"
-	"self_game/constants/redisKey"
+	"self-game/config"
+	"self-game/constants/redisKey"
 	"time"
 )
 

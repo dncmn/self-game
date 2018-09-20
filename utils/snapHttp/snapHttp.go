@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"self_game/utils/logging"
+	"self-game/utils/logging"
 )
 
 var logs = logging.GetLogger()

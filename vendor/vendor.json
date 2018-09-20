@@ -175,14 +175,22 @@
 			"revisionTime": "2018-08-31T06:23:57Z"
 		},
 		{
+			"checksumSHA1": "BGm8lKZmvJbf/YOJLeL1rw2WVjA=",
 			"path": "golang.org/x/crypto/ssh/terminal",
-			"revision": ""
+			"revision": "0e37d006457bf46f9e6692014ba72ef82c33022c",
+			"revisionTime": "2018-06-14T19:19:50Z"
 		},
 		{
 			"checksumSHA1": "/fyGSTHooK5Ez7G597cRNmI5/UM=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "ebe1bf3edb3325c393447059974de898d5133eb8",
 			"revisionTime": "2018-09-05T07:36:18Z"
+		},
+		{
+			"checksumSHA1": "wvpEa7a7bm3i833AmLpSarI51Yc=",
+			"path": "golang.org/x/sys/windows",
+			"revision": "1561086e645b2809fb9f8a1e2a38160bf8d53bf4",
+			"revisionTime": "2018-09-19T14:05:07Z"
 		},
 		{
 			"checksumSHA1": "P/k5ZGf0lEBgpKgkwy++F7K1PSg=",
@@ -197,5 +205,5 @@
 			"revisionTime": "2018-03-28T19:50:20Z"
 		}
 	],
-	"rootPath": "self_game"
+	"rootPath": "self-game"
 }

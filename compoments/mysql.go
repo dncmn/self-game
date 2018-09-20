@@ -7,9 +7,9 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 	"os"
-	"self_game/config"
-	"self_game/model"
-	"self_game/utils/logging"
+	"self-game/config"
+	"self-game/model"
+	"self-game/utils/logging"
 )
 
 var (
