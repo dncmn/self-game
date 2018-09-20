@@ -9,6 +9,18 @@ import (
 	"time"
 )
 
+// 保存登录日志
+func InsertToUserLogin(uid, uname, loginIP, timeZone string) (err error) {
+	loginLog := model.LogLogin{
+		UID:       uid,
+		UserName:  uname,
+		LoginIP:   loginIP,
+		LoginTime: utils.GetTimeZoneTime(timeZone).Unix(),
+	}
+	err = db.Create(&loginLog).Error
+	return
+}
+
 // userToken检验
 func GetUserIDByUserToken(token string) (uid string, isExist bool, err error) {
 	token, isExist, err = redisClient.Get(redisKey.UserIDByToken, token)

@@ -13,6 +13,7 @@ type LogLogin struct {
 	UID       string `gorm:"column:uid;type:varchar(40)"`
 	UserName  string `gorm:"column:user_name"`
 	LoginTime int64  `gorm:"column:login_time"` // 登录时间戳
+	LoginIP   string `gorm:"column:login_ip"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt *time.Time `sql:"index"`

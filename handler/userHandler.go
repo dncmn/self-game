@@ -67,6 +67,14 @@ func UserLoginHandler(c *gin.Context) {
 	retData.Code = gameCode.RequestSuccess
 	retData.Data = resp
 
+	// 记录登录日志
+	go async.Do(func() {
+		ip := c.ClientIP()
+		err = dao.InsertToUserLogin(user.ID, user.UserName, ip, config.Config.Cfg.TimeZone)
+		if err != nil {
+			logger.Errorf("save login log error: uid=%v,err=%v", user.ID, err)
+		}
+	})
 	return
 }
 
