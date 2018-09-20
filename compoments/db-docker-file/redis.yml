@@ -1,0 +1,8 @@
+redis:
+ command: redis-server
+ image: redis
+ container_name: test-redis
+ volumes: 
+   - /tmp/redis:/tmp/redis
+ ports:
+   - 6379:6379
