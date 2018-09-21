@@ -51,7 +51,7 @@ test:
     port: 5432
     dbname: self_game
     username: postgres
-    password: snaplingo456
+    password: 123456
     maxIdleConns: 20
     maxOpenConns: 100
     connMaxLifetime: 5
