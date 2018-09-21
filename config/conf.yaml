@@ -15,9 +15,18 @@ development:
     port: 8080
     timeZone: Asia/Shanghai
   redis:
-     host: 127.0.0.1:6379
-     password:
-     db: 0
+    host: 127.0.0.1:6379
+    password:
+    db: 0
+  pgsql:
+    host: 127.0.0.1
+    port: 5432
+    dbname: self_game
+    username: root
+    password: 123456
+    maxIdleConns: 20
+    maxOpenConns: 100
+    connMaxLifetime: 5
 test:
   mysql:
     host: 127.0.0.1:3306
@@ -37,6 +46,15 @@ test:
     host: 127.0.0.1:6379
     password:
     db: 0
+  pgsql:
+    host: 127.0.0.1
+    port: 5432
+    dbname: self_game
+    username: postgres
+    password: snaplingo456
+    maxIdleConns: 20
+    maxOpenConns: 100
+    connMaxLifetime: 5
 production:
   mysql:
     host: 127.0.0.1:8980
@@ -56,3 +74,12 @@ production:
     host: 127.0.0.1:6379
     password:
     db: 0
+  pgsql:
+    host: 127.0.0.1
+    port: 5432
+    dbname: self_game
+    username: root
+    password: 123456
+    maxIdleConns: 20
+    maxOpenConns: 100
+    connMaxLifetime: 5

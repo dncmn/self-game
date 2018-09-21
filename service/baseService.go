@@ -9,6 +9,7 @@ import (
 var (
 	logger = logging.GetLogger()
 	gloDB  = compoments.GetDB()
+	pgDB   = compoments.GetPGDB()
 )
 
 // write request and response struct

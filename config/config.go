@@ -66,6 +66,18 @@ type RedisConfig struct {
 	DB       int    `yaml:"db"`
 }
 
+// Postres configItem
+type PgConfig struct {
+	Host            string        `yaml:"host"`
+	Port            int           `yaml:"port"`
+	Dbname          string        `yaml:"dbname"`
+	Username        string        `yaml:"username"`
+	Password        string        `yaml:"password"`
+	MaxIdleConns    int           `yaml:"maxIdleConns"`
+	MaxOpenConns    int           `yaml:"maxOpenConns"`
+	ConnMaxLifetime time.Duration `yaml:"connMaxLifetime"`
+}
+
 // 项目配置文件
 type CfgConfig struct {
 	Token    string `yaml:"token"`
@@ -83,6 +95,7 @@ type ConfigItem struct {
 	Env   EnvConfig
 	Cfg   CfgConfig
 	Redis RedisConfig
+	Pgsql PgConfig
 }
 
 type Conf struct {
