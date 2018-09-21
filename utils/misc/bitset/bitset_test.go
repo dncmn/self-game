@@ -9,6 +9,7 @@ package bitset
 import (
 	"encoding"
 	"encoding/json"
+	"fmt"
 	"math"
 	"math/rand"
 	"testing"
@@ -711,7 +712,7 @@ func TestDumpAsBits(t *testing.T) {
 }
 
 func TestMarshalUnmarshalJSON(t *testing.T) {
-	a := New(1010).Set(10).Set(1001)
+	a := New(0).Set(7)
 	data, err := json.Marshal(a)
 	if err != nil {
 		t.Errorf(err.Error())
@@ -730,6 +731,7 @@ func TestMarshalUnmarshalJSON(t *testing.T) {
 		t.Error("Bitsets are not equal:\n\t", a.DumpAsBits(), "\n\t", b.DumpAsBits())
 		return
 	}
+	fmt.Println(b)
 }
 
 // BENCHMARKS

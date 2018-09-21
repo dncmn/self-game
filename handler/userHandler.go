@@ -3,9 +3,9 @@ package handler
 import (
 	"errors"
 	"fmt"
+	"github.com/dncmn/bitset"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"self-game/utils/async"
 	"net/http"
 	"self-game/config"
 	"self-game/constants/gameCode"
@@ -13,6 +13,7 @@ import (
 	"self-game/model"
 	"self-game/service"
 	"self-game/utils"
+	"self-game/utils/async"
 	"self-game/utils/vo"
 	"strings"
 )
@@ -179,7 +180,17 @@ func GetUserNameHandler(c *gin.Context) {
 }
 
 func ConsulHealthCheck(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "ok"})
+
+	retData := vo.NewData()
+	defer SendResponse(c, retData)
+
+	var (
+		b = &bitset.BitSet{}
+	)
+	b.Set(3)
+	retData.Data = b.String()
+	retData.Code = gameCode.RequestSuccess
+	return
 }
 
 func PostUserNameHandler(c *gin.Context) {

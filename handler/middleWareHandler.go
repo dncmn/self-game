@@ -74,7 +74,7 @@ func SendResponse(c *gin.Context, retData *vo.Data) {
 		return
 	}
 
-	logger.Infof("reqURL=%s,responseBody=%v", c.Request.URL, string(resp))
+	logger.Infof("response:reqURL=%s,responseBody=%v", c.Request.URL, string(resp))
 	c.AbortWithStatusJSON(http.StatusOK, retData)
 	return
 }
