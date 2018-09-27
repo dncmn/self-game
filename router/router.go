@@ -36,7 +36,8 @@ func Router(r *gin.Engine) {
 	// 二维码相关
 	codeGroup := cc.Group("/qrcode")
 	{
-		codeGroup.GET("/", handler.GetCodeImageHandler) // 产生二维码
+		codeGroup.GET("/", handler.GetCodeImageHandler)    // 产生二维码
+		codeGroup.GET("/info", handler.GetCodeInfoHandler) // 获取二维码信息---是一个url，就是从那里获取信息
 	}
 
 	// 权限相关

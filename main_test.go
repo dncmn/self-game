@@ -8,6 +8,7 @@ import (
 	"self-game/constants/redisKey"
 	"self-game/model"
 	"self-game/utils"
+	"self-game/utils/qrcode"
 	"self-game/utils/taobaoIP"
 	"testing"
 	"time"
@@ -114,4 +115,14 @@ func TestLinkRedisServer(t *testing.T) {
 	}
 	fmt.Println(res, ok)
 	fmt.Println("success")
+}
+
+func TestGetInfoFromCode(t *testing.T) {
+	dir := "./compoments/runtime/qrcode/1e7e59d1df442a0971f9e846610caca0.jpg"
+	info, err := qrcode.GetCodeInfo(dir)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println(info)
 }

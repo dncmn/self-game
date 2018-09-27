@@ -6,6 +6,8 @@ import (
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/qr"
 
+	"github.com/tuotoo/qrcode"
+	"os"
 	"self-game/config"
 	"self-game/utils"
 	"self-game/utils/logging"
@@ -95,4 +97,24 @@ func (q *QrCode) Encode(path string) (string, string, error) {
 		}
 	}
 	return name, path, nil
+}
+
+func GetCodeInfo(filePath string) (content string, err error) {
+	var (
+		fi *os.File
+	)
+
+	fi, err = os.Open(filePath)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	defer fi.Close()
+	qm, err := qrcode.Decode(fi)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	content = qm.Content
+	return
 }

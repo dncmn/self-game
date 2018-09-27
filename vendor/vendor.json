@@ -163,6 +163,18 @@
 			"revisionTime": "2018-09-14T07:53:49Z"
 		},
 		{
+			"checksumSHA1": "17pyIRa4+1+bbKXX92qPB7znaPI=",
+			"path": "github.com/maruel/rs",
+			"revision": "2c81c4312fe4ee48bed510bdc37ddd499d2d9e9a",
+			"revisionTime": "2015-09-22T17:15:28Z"
+		},
+		{
+			"checksumSHA1": "gldBfAlGmAlcERJkebFJZcDgxp0=",
+			"path": "github.com/maruel/rs/internal/gf256",
+			"revision": "2c81c4312fe4ee48bed510bdc37ddd499d2d9e9a",
+			"revisionTime": "2015-09-22T17:15:28Z"
+		},
+		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
 			"path": "github.com/mattn/go-isatty",
 			"revision": "3fb116b820352b7f0c281308a4d6250c22d94e27",
@@ -198,6 +210,12 @@
 			"path": "github.com/snaplingo-org/sllog",
 			"revision": "79d7460ca7b7e642b6ca4367dc123512f14e9a6f",
 			"revisionTime": "2018-01-23T08:32:24Z"
+		},
+		{
+			"checksumSHA1": "WA/R4+gG3+7YTvEpVFKoxRbOK9o=",
+			"path": "github.com/tuotoo/qrcode",
+			"revision": "fe9894c0199720c0efae45bd72bad8885093865a",
+			"revisionTime": "2018-09-18T16:45:36Z"
 		},
 		{
 			"checksumSHA1": "2gcb98EOaUkHL4mppavZqmonbhc=",
