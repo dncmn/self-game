@@ -78,6 +78,12 @@ type PgConfig struct {
 	ConnMaxLifetime time.Duration `yaml:"connMaxLifetime"`
 }
 
+type CodeConfig struct {
+	RuntimeRootPath string `yaml:"runtimeRootPath"`
+	PrefixUrl       string `yaml:"profixUrl"`
+	QrCodeSavePath  string `yaml:"qrCodeSavePath"`
+}
+
 // 项目配置文件
 type CfgConfig struct {
 	Token    string `yaml:"token"`
@@ -96,6 +102,7 @@ type ConfigItem struct {
 	Cfg   CfgConfig
 	Redis RedisConfig
 	Pgsql PgConfig
+	Code  CodeConfig
 }
 
 type Conf struct {

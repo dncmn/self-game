@@ -3,6 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
+			"path": "github.com/EDDYCJY/go-gin-example",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "YozLws//2wRjLdBOQgJIl3jLI3I=",
 			"path": "github.com/dncmn/bitset",
 			"revision": "8504b654b18f0eb74dd06a5c9687b855975927b5",

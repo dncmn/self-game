@@ -31,6 +31,12 @@ func Router(r *gin.Engine) {
 		user.GET("/health_check", handler.ConsulHealthCheck)
 	}
 
+	// 二维码相关
+	codeGroup:=cc.Group("/qrcode")
+	{
+		codeGroup.GET("/",handler.GetCodeImageHandler)
+	}
+
 	// 权限相关
 	powerGroup := cc.Group("/power")
 	{
