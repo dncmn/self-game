@@ -62,7 +62,7 @@ test:
   app:
     runtimeRootPath: compoments/runtime/
     qrCodeSavePath: qrcode/
-    prefixUrl: http://127.0.0.1:8080
+    prefixUrl: http://127.0.0.1:8080/
 production:
   mysql:
     host: 127.0.0.1:8980

@@ -4,6 +4,8 @@ import (
 	"github.com/boombuler/barcode/qr"
 	"github.com/gin-gonic/gin"
 	"self-game/config"
+	"self-game/constants/gameCode"
+	"self-game/utils"
 	"self-game/utils/qrcode"
 	"self-game/utils/vo"
 )
@@ -11,16 +13,30 @@ import (
 func GetCodeImageHandler(c *gin.Context) {
 	retData := vo.NewData()
 	defer SendResponse(c, retData)
-	qrc := qrcode.NewQrCode("http://www.baidu.com", 300, 300, qr.M, qr.Auto)
+
+	var (
+		err     error
+		codeURL string
+		name    string
+		ph2     string
+	)
+
+	if codeURL = c.Query("codeURL"); utils.IsStringEmpty(codeURL) {
+		retData.Code = gameCode.RequestParamsError
+		return
+	}
+
+	qrc := qrcode.NewQrCode(codeURL, 300, 300, qr.M, qr.Auto)
 	ph := qrcode.GetQrCodeFullPath()
-	_, _, err := qrc.Encode(ph)
+	name, ph2, err = qrc.Encode(ph)
 	if err != nil {
 		retData.Code = -100
 		return
 	}
+	logger.Infof("name=%v,ph2=%v", name, ph2)
 	logger.Infof("runtimeRootPath=%v,qrCodeSavePath=%v", config.Config.Code.RuntimeRootPath, config.Config.Code.QrCodeSavePath)
 
 	logger.Infof("qrc=%v,path=%v", qrc, ph)
-	//retData.Data = "/Users/mn/go/src/self-game/compoments/images/hello.jpeg"
+	retData.Data = config.Config.Code.PrefixUrl + ph2 + name
 	return
 }

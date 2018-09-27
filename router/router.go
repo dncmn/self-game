@@ -3,13 +3,15 @@ package router
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"self-game/config"
 	_ "self-game/dao"
 	"self-game/handler"
+	"self-game/utils/qrcode"
 )
 
 func Router(r *gin.Engine) {
-
+	r.StaticFS("/compoments/runtime/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 	wxServerCheck := r.Group("/api/v2")
 	{
 		wxServerCheck.GET("/", handler.HandlerSignatureHandler)
@@ -32,9 +34,9 @@ func Router(r *gin.Engine) {
 	}
 
 	// 二维码相关
-	codeGroup:=cc.Group("/qrcode")
+	codeGroup := cc.Group("/qrcode")
 	{
-		codeGroup.GET("/",handler.GetCodeImageHandler)
+		codeGroup.GET("/", handler.GetCodeImageHandler) // 产生二维码
 	}
 
 	// 权限相关
