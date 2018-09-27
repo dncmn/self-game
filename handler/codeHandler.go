@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/boombuler/barcode/qr"
 	"github.com/gin-gonic/gin"
+	"self-game/config"
 	"self-game/utils/qrcode"
 	"self-game/utils/vo"
 )
@@ -17,8 +18,9 @@ func GetCodeImageHandler(c *gin.Context) {
 		retData.Code = -100
 		return
 	}
+	logger.Infof("runtimeRootPath=%v,qrCodeSavePath=%v", config.Config.Code.RuntimeRootPath, config.Config.Code.QrCodeSavePath)
 
 	logger.Infof("qrc=%v,path=%v", qrc, ph)
-	retData.Data = "/Users/mn/go/src/self-game/compoments/images/hello.jpeg"
+	//retData.Data = "/Users/mn/go/src/self-game/compoments/images/hello.jpeg"
 	return
 }

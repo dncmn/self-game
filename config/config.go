@@ -80,7 +80,7 @@ type PgConfig struct {
 
 type CodeConfig struct {
 	RuntimeRootPath string `yaml:"runtimeRootPath"`
-	PrefixUrl       string `yaml:"profixUrl"`
+	PrefixUrl       string `yaml:"prefixUrl"`
 	QrCodeSavePath  string `yaml:"qrCodeSavePath"`
 }
 
@@ -97,12 +97,12 @@ type EnvConfig struct {
 }
 
 type ConfigItem struct {
-	Mysql MysqlConfig
-	Env   EnvConfig
-	Cfg   CfgConfig
-	Redis RedisConfig
-	Pgsql PgConfig
-	Code  CodeConfig
+	Mysql MysqlConfig `yaml:"mysql"`
+	Env   EnvConfig   `yaml:"env"`
+	Cfg   CfgConfig   `yaml:"cfg"`
+	Redis RedisConfig `yaml:"redis"`
+	Pgsql PgConfig    `yaml:"pgsql"`
+	Code  CodeConfig  `yaml:"app"`
 }
 
 type Conf struct {

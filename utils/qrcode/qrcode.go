@@ -8,6 +8,11 @@ import (
 
 	"self-game/config"
 	"self-game/utils"
+	"self-game/utils/logging"
+)
+
+var (
+	logger = logging.GetLogger()
 )
 
 type QrCode struct {
@@ -66,6 +71,7 @@ func (q *QrCode) CheckEncode(path string) bool {
 func (q *QrCode) Encode(path string) (string, string, error) {
 	name := GetQrCodeFileName(q.URL) + q.GetQrCodeExt()
 	src := path + name
+	logger.Infof("Encode:name=%v,src=%v", name, src)
 	if utils.CheckNotExist(src) == true {
 		code, err := qr.Encode(q.URL, q.Level, q.Mode)
 		if err != nil {
