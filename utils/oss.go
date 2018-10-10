@@ -69,7 +69,7 @@ func PutFilesToOSS(dir_path string) (err error) {
 
 		// 找到oss_key
 		idx := strings.Index(f, path.Base(dir_path))
-		oss_key := string(([]byte(f)[idx:]))
+		oss_key := string(([]rune(f)[idx:]))
 		err = bkt.PutObjectFromFile(oss_key, f)
 		if err != nil {
 			fmt.Println(err)
