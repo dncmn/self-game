@@ -126,3 +126,13 @@ func TestGetInfoFromCode(t *testing.T) {
 	}
 	fmt.Println(info)
 }
+
+func TestOssPut(t *testing.T) {
+	dir_path := "./config"
+	err := utils.PutFilesToOSS(dir_path)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println("uplode success")
+}

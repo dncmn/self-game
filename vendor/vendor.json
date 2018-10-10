@@ -7,6 +7,12 @@
 			"revision": ""
 		},
 		{
+			"checksumSHA1": "GsbvqF3wo0LP4Bnfrguq+Yw86cA=",
+			"path": "github.com/aliyun/aliyun-oss-go-sdk/oss",
+			"revision": "ddc87ec2145f324f91257266e657cd7fa0ff1c8c",
+			"revisionTime": "2018-09-18T11:43:45Z"
+		},
+		{
 			"checksumSHA1": "YozLws//2wRjLdBOQgJIl3jLI3I=",
 			"path": "github.com/dncmn/bitset",
 			"revision": "8504b654b18f0eb74dd06a5c9687b855975927b5",
