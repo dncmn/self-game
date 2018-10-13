@@ -11,8 +11,8 @@ var (
 
 func init() {
 	sllog.Init(sllog.FileLogConfig{
-		Path:     "/tmp/log/self-game",
-		Filename: "/tmp/log/self-game/self.log",
+		Path:     "/var/log/game-server",
+		Filename: "/var/log/game-server/self.log",
 		MaxLines: 1000000,
 		Maxsize:  1 << 28, //256 MB
 		Daily:    true,
