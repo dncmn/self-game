@@ -169,6 +169,18 @@
 			"revisionTime": "2018-09-14T07:53:49Z"
 		},
 		{
+			"checksumSHA1": "WZ5+vzS8ytJ5AQqHGpxYoxdRA7I=",
+			"path": "github.com/liviosoares/go-watson-sdk/watson",
+			"revision": "0072a48d524a239340fa8fd2d6f0be8eb9534d17",
+			"revisionTime": "2016-06-30T05:03:05Z"
+		},
+		{
+			"checksumSHA1": "Cflnlhz/BIQeH1ysxRkgFCKawdQ=",
+			"path": "github.com/liviosoares/go-watson-sdk/watson/text_to_speech",
+			"revision": "0072a48d524a239340fa8fd2d6f0be8eb9534d17",
+			"revisionTime": "2016-06-30T05:03:05Z"
+		},
+		{
 			"checksumSHA1": "17pyIRa4+1+bbKXX92qPB7znaPI=",
 			"path": "github.com/maruel/rs",
 			"revision": "2c81c4312fe4ee48bed510bdc37ddd499d2d9e9a",

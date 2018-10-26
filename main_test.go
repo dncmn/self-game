@@ -136,3 +136,16 @@ func TestOssPut(t *testing.T) {
 	}
 	fmt.Println("uplode success")
 }
+
+func TestTextToSpeech(t *testing.T) {
+	text := "helloWorld"
+	dir_path := "/Users/mn/Desktop/" + text
+	err := utils.TextToNormalSpeech(text, dir_path, false)
+	if err != nil {
+		t.Error(err)
+		t.Error(err)
+		return
+	}
+
+	fmt.Println("success")
+}
