@@ -51,6 +51,10 @@ func PutObject(filePath, key string) (ossURL string, err error) {
 	return
 }
 
+/*
+	上传指定目录到oss
+	dir_path:要上传的本地目录名,例如:"../Handler"
+*/
 func PutFilesToOSS(dir_path string) (err error) {
 	bkt, err := GetOssBucket(OssBucketName)
 	if err != nil {
@@ -66,11 +70,17 @@ func PutFilesToOSS(dir_path string) (err error) {
 	}
 
 	for _, f := range fs {
-
 		// 找到oss_key
 		idx := strings.Index(f, path.Base(dir_path))
 		oss_key := string(([]rune(f)[idx:]))
-		err = bkt.PutObjectFromFile(oss_key, f)
+
+		if strings.HasSuffix(f, ".DS_Store") {
+			continue
+		}
+
+		b := fmt.Sprint("wxtools/", oss_key)
+		fmt.Println("oss_key=", b, "  f=", f)
+		err = bkt.PutObjectFromFile(b, f)
 		if err != nil {
 			fmt.Println(err)
 			continue
