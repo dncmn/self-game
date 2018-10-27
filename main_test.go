@@ -14,6 +14,20 @@ import (
 	"time"
 )
 
+func TestBaiDuTranslate(t *testing.T){
+	text:="hello"
+	resp,err:=utils.TranslaTate(text)
+	if err!=nil{
+		t.Error(err)
+		return
+	}
+
+	for _,v:=range resp.TransResult{
+		fmt.Println("result=",v.Dst)
+	}
+}
+
+
 func TestURL(t *testing.T) {
 	//rs := url.QueryEscape()
 	rs := "http://www.baidu.com/"

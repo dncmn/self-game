@@ -5,7 +5,7 @@ services:
         image: registry.cn-hangzhou.aliyuncs.com/snaplingo/game-db:1.0
         container_name: test-pg    
         volumes:
-            - /tmp/pgdata2:/var/lib/postgresql/data/
+            - /tmp/pgdata:/var/lib/postgresql/data/
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=1234qwer!@#$$QWER
