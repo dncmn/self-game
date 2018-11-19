@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"encoding/json"
 	"io"
 	"regexp"
 	"strings"
@@ -37,5 +38,27 @@ func EncodeMD5(pwd string) (result string) {
 func GetTimeZoneTime(timezone string) (serverTiem time.Time) {
 	zone, _ := time.LoadLocation(timezone)
 	serverTiem = time.Now().In(zone)
+	return
+}
+
+func MapToStruct(source interface{}, target interface{}) (err error) {
+	tempBytes, err := json.Marshal(source)
+	if err != nil {
+		return
+	}
+	// 获取数据
+	if err = json.Unmarshal(tempBytes, target); err != nil {
+		return
+	}
+	return
+}
+
+func StructToMap(src, dst interface{}) (err error) {
+	byt := make([]byte, 0)
+	byt, err = json.Marshal(src)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(byt, &dst)
 	return
 }
