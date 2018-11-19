@@ -30,6 +30,7 @@ func getTextToSpeechClient() (client text_to_speech.Client, err error) {
 
 // isSlow:表示是否是慢速
 // dir_path:文件的路径  /homeworkTest/images/L1/LessonExerciseL1U1C1/Are you ok?.mp3
+// 每个月有1万个免费字符
 func TextToNormalSpeech(text, dir_path string, isSlow bool) (err error) {
 	client, err := getTextToSpeechClient()
 	if err != nil {
