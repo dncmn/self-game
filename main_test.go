@@ -14,19 +14,18 @@ import (
 	"time"
 )
 
-func TestBaiDuTranslate(t *testing.T){
-	text:="hello"
-	resp,err:=utils.TranslaTate(text)
-	if err!=nil{
+func TestBaiDuTranslate(t *testing.T) {
+	text := "hello"
+	resp, err := utils.TranslaTate(text)
+	if err != nil {
 		t.Error(err)
 		return
 	}
 
-	for _,v:=range resp.TransResult{
-		fmt.Println("result=",v.Dst)
+	for _, v := range resp.TransResult {
+		fmt.Println("result=", v.Dst)
 	}
 }
-
 
 func TestURL(t *testing.T) {
 	//rs := url.QueryEscape()
@@ -151,10 +150,11 @@ func TestOssPut(t *testing.T) {
 	fmt.Println("uplode success")
 }
 
+// watson ibm  生成慢速音频
 func TestTextToSpeech(t *testing.T) {
 	text := "helloWorld"
 	dir_path := "/Users/mn/Desktop/" + text
-	err := utils.TextToNormalSpeech(text, dir_path, false)
+	err := utils.TextToNormalSpeech(text, dir_path, true)
 	if err != nil {
 		t.Error(err)
 		t.Error(err)

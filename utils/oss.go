@@ -77,9 +77,36 @@ func PutFilesToOSS(dir_path string) (err error) {
 		if strings.HasSuffix(f, ".DS_Store") {
 			continue
 		}
+		// 一个Level,一个Level的资源进行更新的:为了测试更新level1的图片,特地注掉的
+		//if strings.Contains(f, "L1") || strings.Contains(f, "L2") ||
+		//	strings.Contains(f, "L3") || strings.Contains(f, "L4") ||
+		//	strings.Contains(f, "L5") || strings.Contains(f, "L6") {
+		//	continue
+		//}
+
+		// 只更新指定level的图片资源,不更新音频
+		if strings.Contains(f, ".mp3") {
+			continue
+		}
+
+		//// 只更新指定level的图片资源
+		if !strings.Contains(f, "L3") {
+			continue
+		}
 
 		b := fmt.Sprint("wxtools/", oss_key)
-		fmt.Println("oss_key=", b, "  f=", f)
+		// 更改oss_key-将osskey都指定成数字形式的
+		if strings.Contains(b, "LessonExercise") {
+			tmp := strings.Split(b, "/")
+			pre := strings.Join(tmp[:len(tmp)-1], "/")
+
+			cls_arr := strings.Split(tmp[4], "_")
+			typ_arr := strings.Split(tmp[5], "_")
+			title_arr := strings.Split(tmp[len(tmp)-1], "_")
+
+			b = fmt.Sprint(pre, "/", cls_arr[1], "_", typ_arr[0], "_", title_arr[0], path.Ext(b))
+			fmt.Println("oss_key=", b, "  f=", f)
+		}
 		err = bkt.PutObjectFromFile(b, f)
 		if err != nil {
 			fmt.Println(err)

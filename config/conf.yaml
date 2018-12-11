@@ -35,7 +35,7 @@ test:
     host: 127.0.0.1:3306
     dbname: game
     username: root
-    password: 123456
+    password: password
     maxOpenConns: 1000
     maxIdleConns: 200
     connMaxLifetime: 5
