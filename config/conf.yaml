@@ -3,8 +3,7 @@ development:
     host: 127.0.0.1:3306
     dbname: game
     username: root
-    password: 123456
-    #password: password
+    password: password
     maxOpenConns: 1000
     maxIdleConns: 200
     connMaxLifetime: 5
@@ -22,7 +21,7 @@ development:
     host: 127.0.0.1
     port: 5432
     dbname: self_game
-    username: root
+    username: postgres
     password: 123456
     maxIdleConns: 20
     maxOpenConns: 100

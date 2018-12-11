@@ -46,5 +46,8 @@ func Router(r *gin.Engine) {
 		powerGroup.GET("/list:uid")
 	}
 
-	r.Run(fmt.Sprintf(":%d", config.Config.Cfg.Port))
+	err := r.Run(fmt.Sprintf(":%d", config.Config.Cfg.Port))
+	if err != nil {
+		panic(err)
+	}
 }
