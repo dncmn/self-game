@@ -4,7 +4,10 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"io"
+	"io/ioutil"
+	"net/http"
 	"regexp"
 	"strings"
 	"time"
@@ -61,4 +64,30 @@ func StructToMap(src, dst interface{}) (err error) {
 	}
 	err = json.Unmarshal(byt, &dst)
 	return
+}
+
+
+// down file from url
+func DownLoadFileFromUrl(filePath, url string) (body []byte, err error) {
+	// download file
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("get file data error", err)
+		return
+	}
+
+	defer resp.Body.Close()
+	body, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("read file data err", err)
+		return
+	}
+
+	err = ioutil.WriteFile(filePath, body, 0644)
+	if err != nil {
+		fmt.Println("write data to file error", err)
+		return
+	}
+
+	return body, nil
 }
