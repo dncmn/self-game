@@ -163,3 +163,14 @@ func TestTextToSpeech(t *testing.T) {
 
 	fmt.Println("success")
 }
+
+// 测试从url上下载资源
+func TestDownLoadMP3FromURL(t *testing.T) {
+	src := "https://qa-game.oss-cn-beijing.aliyuncs.com/wxtools/homeworkTest/audio/L2/LessonExercise_L2U11C1/3_speak/L2U11C1_3_2.mp3"
+	_, err := utils.DownLoadFileFromUrl("/Users/mn/Desktop/output.mp3", src)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println("download resource success")
+}
