@@ -23,6 +23,7 @@ func Router(r *gin.Engine) {
 	{
 		userLoginGroup.POST("/user/register", handler.RegisterUserHandler)
 		userLoginGroup.POST("/user/login", handler.UserLoginHandler)
+		userLoginGroup.GET("/login_by_uid", handler.GetUserLoginHandler)
 	}
 
 	// 用户相关

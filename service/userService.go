@@ -12,6 +12,45 @@ import (
 	"strings"
 )
 
+type UserLoginLogResp struct {
+	UID      string      `json:"uid"`
+	UserName string      `json:"user_name"`
+	IsLogin  bool        `json:"is_login"`
+	Logs     []loginInfo `json:"logs"`
+}
+
+type loginInfo struct {
+	LoginTime interface{} `json:"login_time"`
+	LoginIP   string      `json:"login_ip"`
+}
+
+func GetUserLoginLogService(uid string, n int) (resp UserLoginLogResp, err error) {
+	var (
+		dbLogs []model.LogLogin
+	)
+
+	resp.UID = uid
+	dbLogs, err = dao.GetUserLoginLogByUIDAndLimitDao(uid, n)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	if len(dbLogs) == 0 {
+		resp.IsLogin = false
+		return
+	}
+	resp.UserName = dbLogs[0].UserName
+	resp.IsLogin = true
+	for _, l := range dbLogs {
+		res := loginInfo{
+			LoginIP:   l.LoginIP,
+			LoginTime: l.CreatedAt.Format(config.Config.Cfg.TimeModelStr),
+		}
+		resp.Logs = append(resp.Logs, res)
+	}
+	return
+}
+
 func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, nonce string, err error) {
 	if signature = c.Query("signature"); strings.TrimSpace(signature) == "" {
 		err = errors.New("params error")
@@ -24,12 +63,12 @@ func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, n
 		return
 	}
 
-	if timestamp = c.Query("timestamp");  strings.TrimSpace(timestamp) == "" {
+	if timestamp = c.Query("timestamp"); strings.TrimSpace(timestamp) == "" {
 		err = errors.New("params error")
 		logger.Error(err)
 		return
 	}
-	if nonce= c.Query("nonce");  strings.TrimSpace(nonce) == "" {
+	if nonce = c.Query("nonce"); strings.TrimSpace(nonce) == "" {
 		err = errors.New("params error")
 		logger.Error(err)
 		return

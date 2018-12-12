@@ -56,6 +56,10 @@ func MigragePG() {
 		log.Fatal(err)
 	}
 
+	if err = globlDbPg.AutoMigrate(&model.UserCourse{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
 	logs.Info("end create table")
 }
 

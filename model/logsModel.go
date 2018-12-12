@@ -21,11 +21,11 @@ type LogLogin struct {
 
 // 重命名表名
 func (this *LogLogin) TableName() string {
-	return "log_logins"
+	return "data.log_logins"
 }
 
 // 回调中设置主键
 func (this *LogLogin) BeforeCreate(scope *gorm.Scope) {
 	ui, _ := uuid.NewV4()
-	scope.SetColumn("ID", ui.String())
+	_ = scope.SetColumn("ID", ui.String())
 }

@@ -21,7 +21,7 @@ func initService() {
 	logger.Info("sync info begin")
 	for IsStop {
 		logger.Infof("current_time=%v", utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).Unix())
-		time.Sleep(time.Second)
+		time.Sleep(time.Second * 30)
 	}
 	logger.Info("sync info end")
 }

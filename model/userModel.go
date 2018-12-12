@@ -32,3 +32,26 @@ func (this *User) BeforeCreate(scope *gorm.Scope) {
 	ui, _ := uuid.NewV4()
 	scope.SetColumn("ID", ui.String())
 }
+
+type UserCourse struct {
+	ID         string                     `gorm:"column:id;type:varchar(40);primary_key;" `
+	UID        string                     `gorm:"column:uid;not null"`
+	CourseID   int                        `gorm:"column:course_id;not null;"`    // 课程id
+	IsPay      bool                       `gorm:"column:is_pay;"`                // 课程是否付费
+	UnlockType constants.UnlockCourseType `gorm:"column:unlock_type;default:-1"` // 默认没有解锁
+	Process    int                        `gorm:"column:process"`                // 课程进度
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+	DeletedAt  *time.Time `sql:"index"`
+}
+
+// 重命名表名
+func (this *UserCourse) TableName() string {
+	return "user_course"
+}
+
+// 回调中设置主键
+func (this *UserCourse) BeforeCreate(scope *gorm.Scope) {
+	ui, _ := uuid.NewV4()
+	_ = scope.SetColumn("ID", ui.String())
+}

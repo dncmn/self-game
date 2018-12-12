@@ -86,9 +86,10 @@ type CodeConfig struct {
 
 // 项目配置文件
 type CfgConfig struct {
-	Token    string `yaml:"token"`
-	Port     int    `yaml:"port"`
-	TimeZone string `yaml:"timeZone"`
+	Token        string `yaml:"token"`
+	Port         int    `yaml:"port"`
+	TimeZone     string `yaml:"timeZone"`
+	TimeModelStr string `yaml:"timeModelStr"`
 }
 
 // env 配置文件

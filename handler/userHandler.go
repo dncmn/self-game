@@ -15,8 +15,46 @@ import (
 	"self-game/utils"
 	"self-game/utils/async"
 	"self-game/utils/vo"
+	"strconv"
 	"strings"
 )
+
+// 查找用户登录记录(近n次)
+func GetUserLoginHandler(c *gin.Context) {
+	retData := vo.NewData()
+	defer SendResponse(c, retData)
+	var (
+		uid string
+		n   int
+		err error
+		res interface{}
+	)
+	if uid = c.Query("uid"); utils.IsStringEmpty(uid) {
+		err = errors.New("params error")
+		retData.Data = err
+		retData.Code = gameCode.RequestParamsError
+		logger.Error(err)
+		return
+	}
+	if n, err = strconv.Atoi(c.Query("look_count")); err != nil {
+		err = errors.New("params error")
+		retData.Code = gameCode.RequestParamsError
+		retData.Data = err
+		logger.Error(err)
+		return
+	}
+
+	if res, err = service.GetUserLoginLogService(uid, n); err != nil {
+		err = errors.New("params error")
+		retData.Code = gameCode.RequestParamsError
+		retData.Data = err
+		logger.Error(err)
+		return
+	}
+	retData.Data = res
+	retData.Code = gameCode.RequestSuccess
+	return
+}
 
 // 用户登录
 func UserLoginHandler(c *gin.Context) {
