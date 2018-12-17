@@ -55,6 +55,11 @@ func WechatCodeToUserTokenService(code string) (resp WxCodeToTokenResp, err erro
 	resp.Code = code
 	resp.OpenID = token.OpenId
 	resp.AccessToken = token.AccessToken
+	err=setUserAccessToken(token)
+	if err!=nil{
+		logger.Error(err)
+		return
+	}
 	return
 }
 
