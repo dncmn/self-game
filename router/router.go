@@ -44,7 +44,8 @@ func Router(r *gin.Engine) {
 	// 微信相关
 	wechatGroup := cc.Group("/wechat")
 	{
-		wechatGroup.GET("/openid_by_code", handler.WechatAuthHandler)
+		wechatGroup.GET("/openid_by_code", handler.WechatAuthHandler) // code 换access_token或openid
+		wechatGroup.GET("/media_by_audioid",handler.WechatDownloadMediaDataHandler) // 根据media_id下载音频数据
 	}
 
 	// 权限相关

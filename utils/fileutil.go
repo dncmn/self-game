@@ -1,10 +1,14 @@
 package utils
 
 import (
+	"crypto/md5"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"path"
+	"time"
 )
 
 func FileExist(path string) bool {
@@ -117,4 +121,23 @@ func GetAllFiles(dirPth string) (files []string, err error) {
 	}
 
 	return files, nil
+}
+
+// ReFileName 重命名文件名
+func ReFileName(filePath string) string {
+	dir := path.Dir(filePath)
+	ext := path.Ext(filePath)
+	cruTime := time.Now().Unix()
+	h := md5.New()
+	io.WriteString(h, fmt.Sprintf("%d_snap_%d", cruTime, GenerateRangeNum(10000, 99999)))
+	newName := h.Sum(nil)
+	return fmt.Sprintf("%s/%x%s", dir, newName, ext)
+}
+
+// GenerateRangeNum 生成一个区间范围的随机数
+func GenerateRangeNum(min, max int) int {
+	rand.Seed(time.Now().Unix())
+	randNum := rand.Intn(max - min)
+	randNum = randNum + min
+	return randNum
 }

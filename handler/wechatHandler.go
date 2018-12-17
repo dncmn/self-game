@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"self-game/constants/gameCode"
 	"self-game/service"
@@ -31,5 +32,37 @@ func WechatAuthHandler(c *gin.Context) {
 		return
 	}
 	retData.Data = resp
+	return
+}
+func WechatDownloadMediaDataHandler(c *gin.Context){
+	retData := vo.NewData()
+	defer SendResponse(c, retData)
+	var(
+		err error
+		mediaID string
+		mp3Path string
+		resp interface{}
+	)
+	if mediaID=c.Query("media_id");utils.IsStringEmpty(mediaID){
+		retData.Code=gameCode.RequestParamsError
+		logger.Error(errors.New("param error"))
+		return
+	}
+	mp3Path,err=service.WechatDownAudioByAudioID(mediaID)
+	if err!=nil{
+		retData.Code=gameCode.RequestParamsError
+		logger.Error(errors.New("param error"))
+		return
+	}
+	resp,err=service.WechatUploadAudioToOSS(mp3Path)
+	if err!=nil{
+		retData.Code=gameCode.RequestParamsError
+		logger.Error(errors.New("upload to oss error"))
+		return
+	}
+
+	retData.Code=gameCode.RequestSuccess
+	retData.Data=resp
+	retData.Message="request success"
 	return
 }

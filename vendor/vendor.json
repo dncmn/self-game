@@ -19,6 +19,12 @@
 			"revisionTime": "2018-08-30T05:39:58Z"
 		},
 		{
+			"checksumSHA1": "lmW9qa1QZQNQ6lcSQNslyX868Ug=",
+			"path": "github.com/chanxuehong/util/security",
+			"revision": "caf892acd09c51b89b9a68f89a89bc57f85d63ae",
+			"revisionTime": "2018-11-16T10:07:27Z"
+		},
+		{
 			"checksumSHA1": "YozLws//2wRjLdBOQgJIl3jLI3I=",
 			"path": "github.com/dncmn/bitset",
 			"revision": "8504b654b18f0eb74dd06a5c9687b855975927b5",
@@ -282,8 +288,32 @@
 			"revisionTime": "2018-09-24T08:45:34Z"
 		},
 		{
+			"checksumSHA1": "jEq/dwkwMeVIzoUtO5oAlUPwyzI=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/internal/debug/api/retry",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "z5VBLl2VEBFXkH3MWkidBv3KoIs=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/internal/debug/callback",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
 			"checksumSHA1": "7KdKgm86mwHADaWjJ0ZndL24X8o=",
 			"path": "gopkg.in/chanxuehong/wechat.v2/internal/util",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "gg90T3pxDGctYlCuikGLWjDMpyo=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/mp/core",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "MFF8ocSdIVQ06zsTalktCTx88WA=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/mp/media",
 			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
 			"revisionTime": "2018-09-24T08:45:34Z"
 		},

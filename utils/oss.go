@@ -47,7 +47,7 @@ func PutObject(filePath, key string) (ossURL string, err error) {
 		fmt.Println(err)
 		return
 	}
-	ossURL = fmt.Sprint("http://video.snaplingo.net/", key)
+	ossURL = fmt.Sprint("http://video.happySelf.cn/", key)
 	return
 }
 

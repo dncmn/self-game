@@ -1,9 +1,18 @@
 package service
 
 import (
+	"crypto/tls"
+	"strconv"
+
+	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/chanxuehong/wechat.v2/mp/media"
 	mp "gopkg.in/chanxuehong/wechat.v2/mp/oauth2"
 	"gopkg.in/chanxuehong/wechat.v2/oauth2"
+	"io/ioutil"
+	"net/http"
+	"path"
 	"self-game/config"
+	"self-game/constants"
 	"self-game/constants/redisKey"
 	"self-game/utils"
 	"self-game/utils/async"
@@ -13,6 +22,7 @@ import (
 var (
 	IsStop      = true
 	oath2Client = &oauth2.Client{}
+	coreClient=&core.Client{}
 	ep          mp.Endpoint
 )
 
@@ -23,6 +33,13 @@ func init() {
 	ep = *mp.NewEndpoint(config.Config.Wechat.AppID, config.Config.Wechat.Secret)
 	oath2Client.Endpoint = &ep
 
+	tr:=&http.Transport{
+		TLSClientConfig:&tls.Config{InsecureSkipVerify:true},
+	}
+	basicClient:=&http.Client{Transport:tr}
+	srv:=core.NewDefaultAccessTokenServer(config.Config.Wechat.AppID,config.Config.Wechat.Secret,basicClient)
+	coreClient.AccessTokenServer=srv
+	coreClient.HttpClient=basicClient
 }
 
 func initService() {
@@ -41,6 +58,7 @@ type WxCodeToTokenResp struct {
 	OpenID      string `json:"open_id"`
 }
 
+// code 换token
 func WechatCodeToUserTokenService(code string) (resp WxCodeToTokenResp, err error) {
 	var (
 		token *oauth2.Token
@@ -71,5 +89,48 @@ func setUserAccessToken(token *oauth2.Token) (err error) {
 		return
 	}
 	err = redisClient.Set(redisKey.UserAccessFreshToken, token.OpenId, token.RefreshToken, time.Duration(token.ExpiresIn)*time.Second)
+	return
+}
+
+// 下载音频数据
+func WechatDownAudioByAudioID(audioID string)(mp3Path string,err error){
+	var(
+		fileName string
+		amrBytes=make([]byte,0)
+		amrPath string
+		mp3Name string
+	)
+	fileName=utils.ReFileName(".amr")
+	amrPath=path.Join(constants.WechatDownloadAmrLocalAddr,fileName)
+	_,err=media.Download(coreClient,audioID,amrPath)
+	if err!=nil{
+		logger.Error(err)
+		return
+	}
+	amrBytes,err=ioutil.ReadFile(amrPath)
+	if err!=nil{
+		logger.Error(err)
+		return
+	}
+
+	// amr to mp3
+	mp3Path,_,err=utils.AudioBytesToMp3(amrPath,amrBytes)
+	if err!=nil{
+		logger.Error(err)
+		return
+	}
+	logger.Infof("audioID=%s,mp3Path=%v,mp3Name=%v\n", audioID,mp3Path, mp3Name)
+	return
+}
+
+// 上传到oss
+func WechatUploadAudioToOSS(mp3Path string)(resource_url string,err error){
+	mp3Name:=path.Base(mp3Path)
+	osskey:=path.Join("self-game",strconv.FormatInt(utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).UnixNano(),10),mp3Path,mp3Name)
+	resource_url,err=utils.PutObject(mp3Path,osskey)
+	if err!=nil{
+		logger.Error(err)
+		return
+	}
 	return
 }
