@@ -97,13 +97,19 @@ type EnvConfig struct {
 	ENV string `yaml:"env"`
 }
 
+type WechatConfig struct {
+	AppID  string `yaml:"appid"`
+	Secret string `yaml:"secret"`
+}
+
 type ConfigItem struct {
-	Mysql MysqlConfig `yaml:"mysql"`
-	Env   EnvConfig   `yaml:"env"`
-	Cfg   CfgConfig   `yaml:"cfg"`
-	Redis RedisConfig `yaml:"redis"`
-	Pgsql PgConfig    `yaml:"pgsql"`
-	Code  CodeConfig  `yaml:"app"`
+	Mysql  MysqlConfig  `yaml:"mysql"`
+	Env    EnvConfig    `yaml:"env"`
+	Cfg    CfgConfig    `yaml:"cfg"`
+	Redis  RedisConfig  `yaml:"redis"`
+	Pgsql  PgConfig     `yaml:"pgsql"`
+	Code   CodeConfig   `yaml:"app"`
+	Wechat WechatConfig `yaml:"wechat"`
 }
 
 type Conf struct {

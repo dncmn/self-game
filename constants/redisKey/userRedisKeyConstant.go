@@ -43,6 +43,17 @@ var (
 		Expire: 0,
 		Module: mUser,
 	}
+
+	// 保存用户accessToken
+	UserAccessToken = &RedisKeyInfo{
+		Key:    "self_game:wechat:user_access_token:",
+		Expire: 6000,
+	}
+	// wechat:用户的openID
+	UserAccessFreshToken = &RedisKeyInfo{
+		Key:    "self_game:wechat:user_access_refresh_token:",
+		Expire: 6000,
+	}
 )
 
 const (

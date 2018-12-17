@@ -41,6 +41,12 @@ func Router(r *gin.Engine) {
 		codeGroup.GET("/info", handler.GetCodeInfoHandler) // 获取二维码信息---是一个url，就是从那里获取信息
 	}
 
+	// 微信相关
+	wechatGroup := cc.Group("/wechat")
+	{
+		wechatGroup.GET("/openid_by_code", handler.WechatAuthHandler)
+	}
+
 	// 权限相关
 	powerGroup := cc.Group("/power")
 	{

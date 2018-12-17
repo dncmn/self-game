@@ -13,6 +13,12 @@
 			"revisionTime": "2018-09-18T11:43:45Z"
 		},
 		{
+			"checksumSHA1": "8+f4h5mx5I6jnA3woMCWPoEdzBY=",
+			"path": "github.com/chanxuehong/rand",
+			"revision": "4b3aff17f488b938cf3f70f495b90c1fc99fdb57",
+			"revisionTime": "2018-08-30T05:39:58Z"
+		},
+		{
 			"checksumSHA1": "YozLws//2wRjLdBOQgJIl3jLI3I=",
 			"path": "github.com/dncmn/bitset",
 			"revision": "8504b654b18f0eb74dd06a5c9687b855975927b5",
@@ -268,6 +274,36 @@
 			"path": "google.golang.org/appengine/cloudsql",
 			"revision": "5be9bd34135805e0332b993378864b159784d8a8",
 			"revisionTime": "2018-09-14T07:53:49Z"
+		},
+		{
+			"checksumSHA1": "InkZWoCU33WX4k2eKFD8iZMqLj8=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/internal/debug/api",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "7KdKgm86mwHADaWjJ0ZndL24X8o=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/internal/util",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "5p5RTFhNyxVWaE3DXCiKLyWxqJQ=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/mp/oauth2",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "x7pNK8mt7M/0/cLTKPcWd9NPgeY=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/oauth2",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "CL3UwLVjuwcpETc02rIeZfUyLvo=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/util",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
 		},
 		{
 			"checksumSHA1": "P/k5ZGf0lEBgpKgkwy++F7K1PSg=",

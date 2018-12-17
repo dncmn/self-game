@@ -31,6 +31,9 @@ development:
     runtimeRootPath: /tmp/code
     qrCodeSavePath: /tmp/code
     prefixUrl: dncmn
+  wechat:
+    appid: xxxx-yyyy-zzzz
+    secret: xxxx-yyyy-zzzz
 test:
   mysql:
     host: 127.0.0.1:3306
@@ -64,6 +67,9 @@ test:
     runtimeRootPath: compoments/runtime/
     qrCodeSavePath: qrcode/
     prefixUrl: http://127.0.0.1:8080/
+  wechat:
+    appid: xxxx-yyyy-zzzz
+    secret: xxxx-yyyy-zzzz
 production:
   mysql:
     host: 127.0.0.1:8980
@@ -97,3 +103,6 @@ production:
     runtimeRootPath: /tmp/code
     qrCodeSavePath: /tmp/code
     prefixUrl: dncmn
+  wechat:
+    appid: xxxx-yyyy-zzzz
+    secret: xxxx-yyyy-zzzz

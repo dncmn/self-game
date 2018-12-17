@@ -7,9 +7,10 @@ import (
 )
 
 var (
-	logger = logging.GetLogger()
-	gloDB  = compoments.GetDB()
-	pgDB   = compoments.GetPGDB()
+	logger      = logging.GetLogger()
+	gloDB       = compoments.GetDB()
+	pgDB        = compoments.GetPGDB()
+	redisClient = compoments.GetRedisClient()
 )
 
 // write request and response struct
