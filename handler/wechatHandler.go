@@ -9,6 +9,7 @@ import (
 	"self-game/utils/vo"
 )
 
+// code exchange accessToken
 func WechatAuthHandler(c *gin.Context) {
 	retData := vo.NewData()
 	defer SendResponse(c, retData)
@@ -34,6 +35,8 @@ func WechatAuthHandler(c *gin.Context) {
 	retData.Data = resp
 	return
 }
+
+// 根据audioID下载音频
 func WechatDownloadMediaDataHandler(c *gin.Context){
 	retData := vo.NewData()
 	defer SendResponse(c, retData)
@@ -64,5 +67,39 @@ func WechatDownloadMediaDataHandler(c *gin.Context){
 	retData.Code=gameCode.RequestSuccess
 	retData.Data=resp
 	retData.Message="request success"
+	return
+}
+
+func WechatSendTemplateInfoHandler(c *gin.Context){
+	retData:=vo.NewData()
+	defer SendResponse(c, retData)
+	var(
+		body service.SendTemplateRes
+		resp interface{}
+		err error
+	)
+	if err=ParsePostBody(c,&body);err!=nil{
+		retData.Code=gameCode.RequestParamsError
+		logger.Error("param error")
+		return
+	}
+	if err=service.WechatSendTemplateInfo(body);err!=nil{
+		retData.Code=gameCode.RequestParamsError
+		retData.Message=err.Error()
+		logger.Error(err)
+		return
+	}
+
+	// 测试根据openID获取用户信息
+	resp,err=service.WechatGetUserInfoByOpenID(body.OpenID)
+	if err!=nil{
+		retData.Code=gameCode.RequestParamsError
+		retData.Message=err.Error()
+		logger.Error(err)
+		return
+	}
+	retData.Code=gameCode.RequestSuccess
+	retData.Data=resp
+	logger.Infof("openid=%v,userInfo=%v",body.OpenID,resp)
 	return
 }

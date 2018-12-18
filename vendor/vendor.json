@@ -318,8 +318,20 @@
 			"revisionTime": "2018-09-24T08:45:34Z"
 		},
 		{
+			"checksumSHA1": "xqjuuOZelYU3MlBkHO+evUY6HJ4=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/mp/message/template",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
 			"checksumSHA1": "5p5RTFhNyxVWaE3DXCiKLyWxqJQ=",
 			"path": "gopkg.in/chanxuehong/wechat.v2/mp/oauth2",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
+			"checksumSHA1": "tz9nhdLHyW7n/9wXqJfrcgGZK4Q=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/mp/user",
 			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
 			"revisionTime": "2018-09-24T08:45:34Z"
 		},

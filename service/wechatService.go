@@ -2,6 +2,9 @@ package service
 
 import (
 	"crypto/tls"
+	"encoding/json"
+	"gopkg.in/chanxuehong/wechat.v2/mp/message/template"
+	"gopkg.in/chanxuehong/wechat.v2/mp/user"
 	"strconv"
 
 	"gopkg.in/chanxuehong/wechat.v2/mp/core"
@@ -128,6 +131,46 @@ func WechatUploadAudioToOSS(mp3Path string)(resource_url string,err error){
 	mp3Name:=path.Base(mp3Path)
 	osskey:=path.Join("self-game",strconv.FormatInt(utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).UnixNano(),10),mp3Path,mp3Name)
 	resource_url,err=utils.PutObject(mp3Path,osskey)
+	if err!=nil{
+		logger.Error(err)
+		return
+	}
+	return
+}
+
+// 根据openid获取用户信息
+func WechatGetUserInfoByOpenID(openid string)(userInfo *user.UserInfo, err error){
+	userInfo,err=user.Get(coreClient,openid,"")
+	if err!=nil{
+		logger.Error(err)
+		return
+	}
+	logger.Infof("openid=%s,username=%v,country=%v,userinfo=%v",
+		userInfo.OpenId,userInfo.Nickname,userInfo.Country,userInfo)
+	return
+}
+
+type SendTemplateRes struct {
+	OpenID      string      `json:"openID"`
+	TempleteID  string      `json:"templeteId"`
+	KeyWordData interface{} `json:"keyWordData"`
+	ActionURL   string      `json:"actionURL"`
+}
+
+// 发送模板消息
+func WechatSendTemplateInfo(body SendTemplateRes)(err error){
+	marshData, err := json.Marshal(body.KeyWordData)
+	if err != nil {
+		logger.Errorf("marshal templdate data error %v", err)
+		return
+	}
+	res := &template.TemplateMessage{}
+	res.ToUser = body.OpenID
+	res.TemplateId = body.TempleteID
+	res.URL = body.ActionURL
+	res.Data = marshData
+
+	_, err = template.Send(coreClient, res)
 	if err!=nil{
 		logger.Error(err)
 		return

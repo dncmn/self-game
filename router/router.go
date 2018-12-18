@@ -46,6 +46,7 @@ func Router(r *gin.Engine) {
 	{
 		wechatGroup.GET("/openid_by_code", handler.WechatAuthHandler) // code 换access_token或openid
 		wechatGroup.GET("/media_by_audioid",handler.WechatDownloadMediaDataHandler) // 根据media_id下载音频数据
+		wechatGroup.POST("/send_template_info",handler.WechatSendTemplateInfoHandler)// 发送模板消息
 	}
 
 	// 权限相关
