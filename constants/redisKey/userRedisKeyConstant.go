@@ -54,6 +54,11 @@ var (
 		Key:    "self_game:wechat:user_access_refresh_token:",
 		Expire: 6000,
 	}
+	// 在获取jsonfig的时候，可以使用，但是这里没有用，保留用
+	UserJsTicket = &RedisKeyInfo{
+		Key:    "wechat_jsapi_ticket",
+		Expire: 300,
+	}
 )
 
 const (

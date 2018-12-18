@@ -3,6 +3,7 @@ package service
 import (
 	"crypto/tls"
 	"encoding/json"
+	"gopkg.in/chanxuehong/wechat.v2/mp/jssdk"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/template"
 	"gopkg.in/chanxuehong/wechat.v2/mp/user"
 	"strconv"
@@ -23,10 +24,11 @@ import (
 )
 
 var (
-	IsStop      = true
-	oath2Client = &oauth2.Client{}
-	coreClient=&core.Client{}
-	ep          mp.Endpoint
+	IsStop       = true
+	oath2Client  = &oauth2.Client{}
+	coreClient   = &core.Client{}
+	ep           mp.Endpoint
+	ticketClient jssdk.TicketServer
 )
 
 func init() {
@@ -36,13 +38,14 @@ func init() {
 	ep = *mp.NewEndpoint(config.Config.Wechat.AppID, config.Config.Wechat.Secret)
 	oath2Client.Endpoint = &ep
 
-	tr:=&http.Transport{
-		TLSClientConfig:&tls.Config{InsecureSkipVerify:true},
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
-	basicClient:=&http.Client{Transport:tr}
-	srv:=core.NewDefaultAccessTokenServer(config.Config.Wechat.AppID,config.Config.Wechat.Secret,basicClient)
-	coreClient.AccessTokenServer=srv
-	coreClient.HttpClient=basicClient
+	basicClient := &http.Client{Transport: tr}
+	srv := core.NewDefaultAccessTokenServer(config.Config.Wechat.AppID, config.Config.Wechat.Secret, basicClient)
+	coreClient.AccessTokenServer = srv
+	coreClient.HttpClient = basicClient
+	ticketClient = jssdk.NewDefaultTicketServer(coreClient)
 }
 
 func initService() {
@@ -76,8 +79,8 @@ func WechatCodeToUserTokenService(code string) (resp WxCodeToTokenResp, err erro
 	resp.Code = code
 	resp.OpenID = token.OpenId
 	resp.AccessToken = token.AccessToken
-	err=setUserAccessToken(token)
-	if err!=nil{
+	err = setUserAccessToken(token)
+	if err != nil {
 		logger.Error(err)
 		return
 	}
@@ -96,42 +99,42 @@ func setUserAccessToken(token *oauth2.Token) (err error) {
 }
 
 // 下载音频数据
-func WechatDownAudioByAudioID(audioID string)(mp3Path string,err error){
-	var(
+func WechatDownAudioByAudioID(audioID string) (mp3Path string, err error) {
+	var (
 		fileName string
-		amrBytes=make([]byte,0)
-		amrPath string
-		mp3Name string
+		amrBytes = make([]byte, 0)
+		amrPath  string
+		mp3Name  string
 	)
-	fileName=utils.ReFileName(".amr")
-	amrPath=path.Join(constants.WechatDownloadAmrLocalAddr,fileName)
-	_,err=media.Download(coreClient,audioID,amrPath)
-	if err!=nil{
+	fileName = utils.ReFileName(".amr")
+	amrPath = path.Join(constants.WechatDownloadAmrLocalAddr, fileName)
+	_, err = media.Download(coreClient, audioID, amrPath)
+	if err != nil {
 		logger.Error(err)
 		return
 	}
-	amrBytes,err=ioutil.ReadFile(amrPath)
-	if err!=nil{
+	amrBytes, err = ioutil.ReadFile(amrPath)
+	if err != nil {
 		logger.Error(err)
 		return
 	}
 
 	// amr to mp3
-	mp3Path,_,err=utils.AudioBytesToMp3(amrPath,amrBytes)
-	if err!=nil{
+	mp3Path, _, err = utils.AudioBytesToMp3(amrPath, amrBytes)
+	if err != nil {
 		logger.Error(err)
 		return
 	}
-	logger.Infof("audioID=%s,mp3Path=%v,mp3Name=%v\n", audioID,mp3Path, mp3Name)
+	logger.Infof("audioID=%s,mp3Path=%v,mp3Name=%v\n", audioID, mp3Path, mp3Name)
 	return
 }
 
 // 上传到oss
-func WechatUploadAudioToOSS(mp3Path string)(resource_url string,err error){
-	mp3Name:=path.Base(mp3Path)
-	osskey:=path.Join("self-game",strconv.FormatInt(utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).UnixNano(),10),mp3Path,mp3Name)
-	resource_url,err=utils.PutObject(mp3Path,osskey)
-	if err!=nil{
+func WechatUploadAudioToOSS(mp3Path string) (resource_url string, err error) {
+	mp3Name := path.Base(mp3Path)
+	osskey := path.Join("self-game", strconv.FormatInt(utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).UnixNano(), 10), mp3Path, mp3Name)
+	resource_url, err = utils.PutObject(mp3Path, osskey)
+	if err != nil {
 		logger.Error(err)
 		return
 	}
@@ -139,14 +142,14 @@ func WechatUploadAudioToOSS(mp3Path string)(resource_url string,err error){
 }
 
 // 根据openid获取用户信息
-func WechatGetUserInfoByOpenID(openid string)(userInfo *user.UserInfo, err error){
-	userInfo,err=user.Get(coreClient,openid,"")
-	if err!=nil{
+func WechatGetUserInfoByOpenID(openid string) (userInfo *user.UserInfo, err error) {
+	userInfo, err = user.Get(coreClient, openid, "")
+	if err != nil {
 		logger.Error(err)
 		return
 	}
 	logger.Infof("openid=%s,username=%v,country=%v,userinfo=%v",
-		userInfo.OpenId,userInfo.Nickname,userInfo.Country,userInfo)
+		userInfo.OpenId, userInfo.Nickname, userInfo.Country, userInfo)
 	return
 }
 
@@ -158,7 +161,7 @@ type SendTemplateRes struct {
 }
 
 // 发送模板消息
-func WechatSendTemplateInfo(body SendTemplateRes)(err error){
+func WechatSendTemplateInfo(body SendTemplateRes) (err error) {
 	marshData, err := json.Marshal(body.KeyWordData)
 	if err != nil {
 		logger.Errorf("marshal templdate data error %v", err)
@@ -171,9 +174,38 @@ func WechatSendTemplateInfo(body SendTemplateRes)(err error){
 	res.Data = marshData
 
 	_, err = template.Send(coreClient, res)
-	if err!=nil{
+	if err != nil {
 		logger.Error(err)
 		return
 	}
+	return
+}
+
+type SignatureResp struct {
+	AppId      string
+	Ticket     string
+	NonceStr   string
+	TimeTagStr string
+	Url        string
+	Signature  string
+}
+
+// get jsconfig
+func WechatGetJSConfig(baseURL string) (resp SignatureResp, err error) {
+	var ticket string
+	ticket, err = ticketClient.Ticket()
+	if err != nil {
+		return
+	}
+	v := utils.IntRange(100000000000000, 999999999999999)
+	nonceStr := strconv.FormatInt(int64(v), 10)
+
+	timeTag := time.Now().UnixNano()
+	timeTagStr := strconv.FormatInt(timeTag, 10)
+	resp.Signature = jssdk.WXConfigSign(ticket, nonceStr, timeTagStr, baseURL)
+	resp.AppId = config.Config.Wechat.AppID
+	resp.NonceStr = nonceStr
+	resp.Ticket = ticket
+	resp.TimeTagStr = timeTagStr
 	return
 }

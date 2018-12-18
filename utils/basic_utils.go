@@ -66,7 +66,6 @@ func StructToMap(src, dst interface{}) (err error) {
 	return
 }
 
-
 // down file from url
 func DownLoadFileFromUrl(filePath, url string) (body []byte, err error) {
 	// download file

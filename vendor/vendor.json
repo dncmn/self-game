@@ -312,6 +312,12 @@
 			"revisionTime": "2018-09-24T08:45:34Z"
 		},
 		{
+			"checksumSHA1": "3v2Jfv0Mxq5wGU2kuMxvMeB+zC0=",
+			"path": "gopkg.in/chanxuehong/wechat.v2/mp/jssdk",
+			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
+			"revisionTime": "2018-09-24T08:45:34Z"
+		},
+		{
 			"checksumSHA1": "MFF8ocSdIVQ06zsTalktCTx88WA=",
 			"path": "gopkg.in/chanxuehong/wechat.v2/mp/media",
 			"revision": "7e0579cb53778593c058a1b60cfd0df9010f402c",
