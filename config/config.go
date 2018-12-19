@@ -100,6 +100,7 @@ type EnvConfig struct {
 type WechatConfig struct {
 	AppID  string `yaml:"appid"`
 	Secret string `yaml:"secret"`
+	Token  string `json:"token"`
 }
 
 type ConfigItem struct {

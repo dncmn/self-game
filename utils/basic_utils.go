@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"crypto/sha1"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -29,7 +30,14 @@ func IsStringEmpty(v string) (ok bool) {
 	return
 }
 
-// 用户注册时的md5加密
+// sha1加密
+func EncodeSha1(pwd string) (result string) {
+	sha1 := sha1.New()
+	sha1.Write([]byte(pwd))
+	return hex.EncodeToString(sha1.Sum([]byte("")))
+}
+
+// md5加密
 func EncodeMD5(pwd string) (result string) {
 	h := md5.New()
 	io.WriteString(h, pwd)

@@ -6,7 +6,9 @@ import (
 	"gopkg.in/chanxuehong/wechat.v2/mp/jssdk"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/template"
 	"gopkg.in/chanxuehong/wechat.v2/mp/user"
+	"sort"
 	"strconv"
+	"strings"
 
 	"gopkg.in/chanxuehong/wechat.v2/mp/core"
 	"gopkg.in/chanxuehong/wechat.v2/mp/media"
@@ -182,12 +184,12 @@ func WechatSendTemplateInfo(body SendTemplateRes) (err error) {
 }
 
 type SignatureResp struct {
-	AppId      string
-	Ticket     string
-	NonceStr   string
-	TimeTagStr string
-	Url        string
-	Signature  string
+	AppId      string `json:"app_id"`
+	Ticket     string `json:"ticket"`
+	NonceStr   string `json:"nonce_str"`
+	TimeTagStr string `json:"time_tag_str"`
+	Url        string `json:"url"`
+	Signature  string `json:"signature"`
 }
 
 // get jsconfig
@@ -207,5 +209,21 @@ func WechatGetJSConfig(baseURL string) (resp SignatureResp, err error) {
 	resp.NonceStr = nonceStr
 	resp.Ticket = ticket
 	resp.TimeTagStr = timeTagStr
+	return
+}
+
+// 配置wechet服务器的时候做的验证
+func WechatCheckServer(timestamp, nonce, signature string) (success bool) {
+	list := []string{
+		config.Config.Wechat.Token, timestamp, nonce,
+	}
+	sort.Strings(list)
+	totalStr := strings.Join(list, "")
+	encodeTotalStr := utils.EncodeSha1(totalStr)
+	logger.Infof("totalStr=%s,md5Str=%s,signature=%s", totalStr, encodeTotalStr, signature)
+
+	if encodeTotalStr == signature {
+		return true
+	}
 	return
 }

@@ -34,6 +34,7 @@ development:
   wechat:
     appid: wx66d4b9cfdba3516a
     secret: 92ae70edab1f626e1b37b435fb1190c7
+    token: helloWorld
 test:
   mysql:
     host: 127.0.0.1:3306
@@ -70,6 +71,7 @@ test:
   wechat:
     appid: wx66d4b9cfdba3516a
     secret: 92ae70edab1f626e1b37b435fb1190c7
+    token: helloWorld
 production:
   mysql:
     host: 127.0.0.1:8980
@@ -106,3 +108,4 @@ production:
   wechat:
     appid: wx66d4b9cfdba3516a
     secret: 92ae70edab1f626e1b37b435fb1190c7
+    token: helloWorld

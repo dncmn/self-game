@@ -6,7 +6,6 @@ import (
 	"github.com/dncmn/bitset"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"net/http"
 	"self-game/config"
 	"self-game/constants/gameCode"
 	"self-game/dao"
@@ -187,12 +186,14 @@ func HandlerSignatureHandler(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(signature, echostr, timestamp, nonce)
-
-	c.JSON(http.StatusOK, gin.H{
-		"ok": true,
-	})
-
+	logger.Infof("signature=%s,echostr=%s,nonce=%s,nonce=%s",
+		signature, echostr, timestamp, nonce)
+	ok := service.WechatCheckServer(timestamp, nonce, signature)
+	if ok {
+		c.Data(200, "", []byte(echostr))
+		return
+	}
+	logger.Info("request success")
 }
 
 func GetUserNameHandler(c *gin.Context) {
