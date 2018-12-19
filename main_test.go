@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gopkg.in/chanxuehong/wechat.v2/mp/message/mass/mass2all"
 	"net/url"
 	"self-game/compoments"
 	"self-game/config"
@@ -233,4 +234,15 @@ func TestSendWechatTemplateInfo(t *testing.T) {
 		return
 	}
 	t.Log("send message success")
+}
+
+// 测试微信群发消息
+func TestWechatMassSendInfo(t *testing.T) {
+	txt := mass2all.NewText("hello")
+	err := service.WechatMassSendTextMsgByOpenID(txt)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println("success")
 }

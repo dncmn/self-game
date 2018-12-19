@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"gopkg.in/chanxuehong/wechat.v2/mp/jssdk"
+	"gopkg.in/chanxuehong/wechat.v2/mp/message/mass/mass2all"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/template"
 	"gopkg.in/chanxuehong/wechat.v2/mp/user"
 	"sort"
@@ -240,4 +241,15 @@ type ReceiveMsgReq struct {
 	PicUrl       string `json:"PicUrl,omitempty"`  // 图片消息：图片的url
 	MediaId      string `json:"MedisId,omitempty"` // 语音消息: mediaID
 	Format       string `json:"Format,omitempty"`  // 语音消息: 音频格式化类型mp3/wav/amr等
+}
+
+// 微信群发信息
+func WechatMassSendTextMsgByOpenID(message interface{}) (err error) {
+	res, err := mass2all.Send(coreClient, message)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	logger.Infof("res.MsgDataId=%v,res.MsgId=%v", res.MsgDataId, res.MsgId)
+	return
 }
