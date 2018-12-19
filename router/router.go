@@ -15,6 +15,7 @@ func Router(r *gin.Engine) {
 	wxServerCheck := r.Group("/api/v2")
 	{
 		wxServerCheck.GET("/check", handler.HandlerSignatureHandler)
+		wxServerCheck.POST("/check", handler.HandMessagesHandler)
 
 	}
 

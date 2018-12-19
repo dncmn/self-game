@@ -158,3 +158,42 @@ func WechatReceiveMsgHandler(c *gin.Context) {
 	logger.Info(body)
 	return
 }
+
+func HandMessagesHandler(c *gin.Context) {
+	retData := vo.NewData()
+	defer SendResponse(c, retData)
+	var (
+		body       interface{}
+		content    = make([]byte, 0)
+		convertMap = make(map[string]string)
+		finalBody  service.XMLReq
+		err        error
+	)
+
+	// 获取xml中的请求体内容
+	if content, err = ParsePostXMLBody(c, &body); err != nil {
+		retData.Code = gameCode.RequestParamsError
+		retData.Message = err.Error()
+		return
+	}
+	// 将xml转换为map
+	convertMap, err = utils.XmlToMap(content)
+	if err != nil {
+		retData.Code = gameCode.RequestParamsError
+		retData.Message = err.Error()
+		return
+	}
+	// map to struct
+	err = utils.StructToMap(convertMap, &finalBody)
+	if err != nil {
+		retData.Code = gameCode.RequestParamsError
+		retData.Message = err.Error()
+		return
+	}
+
+	retData.Code = gameCode.RequestSuccess
+	retData.Message = "request success"
+	retData.Data = finalBody
+	logger.Infof("finalBody=%s", finalBody)
+	return
+}

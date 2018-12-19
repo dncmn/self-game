@@ -253,3 +253,14 @@ func WechatMassSendTextMsgByOpenID(message interface{}) (err error) {
 	logger.Infof("res.MsgDataId=%v,res.MsgId=%v", res.MsgDataId, res.MsgId)
 	return
 }
+
+type XMLReq struct {
+	XMLName      interface{} `xml:"xml"`
+	Text         string      `xml:",chardata"`
+	ToUserName   string      `xml:"ToUserName"`
+	FromUserName string      `xml:"FromUserName"`
+	CreateTime   string      `xml:"CreateTime"`
+	MsgType      string      `xml:"MsgType"`
+	Content      string      `xml:"Content"`
+	MsgId        string      `xml:"MsgId"`
+}

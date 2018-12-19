@@ -96,3 +96,17 @@ func ParsePostBody(c *gin.Context, resp interface{}) (err error) {
 	}
 	return
 }
+
+// post请求获取请求参数
+func ParsePostXMLBody(c *gin.Context, resp interface{}) (content []byte, err error) {
+	// 从请求体中获取请求的数据
+	content, err = ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	logger.Infof("[Request Url Body] req:%s url:%s  body:%s", c.GetString("reqID"),
+		c.Request.RequestURI, string(content))
+	// 将请求数据绑定到指定的结构体中
+	return
+}
