@@ -5,11 +5,14 @@ import (
 	"net/url"
 	"self-game/compoments"
 	"self-game/config"
+	"self-game/constants"
 	"self-game/constants/redisKey"
 	"self-game/model"
+	"self-game/service"
 	"self-game/utils"
 	"self-game/utils/qrcode"
 	"self-game/utils/taobaoIP"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -173,4 +176,61 @@ func TestDownLoadMP3FromURL(t *testing.T) {
 		return
 	}
 	fmt.Println("download resource success")
+}
+
+// 根据openid获取用户的信息
+func TestGetUserInfoByOpenID(t *testing.T) {
+	openid := "oTVNt1dPSf0U7PLI0AytXfhZad0M"
+	info, err := service.WechatGetUserInfoByOpenID(openid)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println(info)
+}
+
+// 测试发送微信模板消息
+func TestSendWechatTemplateInfo(t *testing.T) {
+	var (
+		body = service.SendTemplateRes{}
+		err  error
+	)
+	body.OpenID = "oTVNt1bGq0r807c4p67aPOp_ooQQ"
+	body.TempleteID = "oxqQSgyT5aYa2Hmv7nO03MDId5kXZfTB5Q86wR0UM5E"
+	body.ActionURL = "http://www.baidu.com"
+	pl := constants.GetPhoniceRemindTPL()
+
+	info, err := service.WechatGetUserInfoByOpenID(body.OpenID)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	// 更改姓名
+	tmp_name := constants.InnerData{}
+	tmp_name.Color = pl.Data["keyword1"].Color
+	tmp_name.Value = info.Nickname
+	pl.Data["keyword1"] = tmp_name
+
+	// 更改性别
+	tmp_sex := constants.InnerData{
+		Color: pl.Data["keyword2"].Color,
+	}
+	tmp_sex.Value = strconv.Itoa(info.Sex)
+	pl.Data["keyword2"] = tmp_sex
+
+	// 更改放假说明
+	tmp_notice := constants.InnerData{
+		Color: pl.Data["remark"].Color,
+	}
+	tmp_notice.Value = fmt.Sprintf("%s 来自  %s,马上就要放假了", info.Nickname, info.Country)
+	pl.Data["remark"] = tmp_notice
+
+	body.KeyWordData = pl.Data
+	err = service.WechatSendTemplateInfo(body)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log("send message success")
 }

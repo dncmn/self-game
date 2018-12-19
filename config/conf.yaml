@@ -32,8 +32,8 @@ development:
     qrCodeSavePath: /tmp/code
     prefixUrl: dncmn
   wechat:
-    appid: xxxx-yyyy-zzzz
-    secret: xxxx-yyyy-zzzz
+    appid: wx66d4b9cfdba3516a
+    secret: 92ae70edab1f626e1b37b435fb1190c7
 test:
   mysql:
     host: 127.0.0.1:3306
@@ -68,8 +68,8 @@ test:
     qrCodeSavePath: qrcode/
     prefixUrl: http://127.0.0.1:8080/
   wechat:
-    appid: xxxx-yyyy-zzzz
-    secret: xxxx-yyyy-zzzz
+    appid: wx66d4b9cfdba3516a
+    secret: 92ae70edab1f626e1b37b435fb1190c7
 production:
   mysql:
     host: 127.0.0.1:8980
@@ -104,5 +104,5 @@ production:
     qrCodeSavePath: /tmp/code
     prefixUrl: dncmn
   wechat:
-    appid: xxxx-yyyy-zzzz
-    secret: xxxx-yyyy-zzzz
+    appid: wx66d4b9cfdba3516a
+    secret: 92ae70edab1f626e1b37b435fb1190c7
