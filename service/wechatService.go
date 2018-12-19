@@ -227,3 +227,17 @@ func WechatCheckServer(timestamp, nonce, signature string) (success bool) {
 	}
 	return
 }
+
+// 微信公众号内接收消息的请求体
+type ReceiveMsgReq struct {
+	URL          string `json:"URL"`
+	ToUserName   string `json:"ToUserName"`        // 消息的接收者
+	FromUserName string `json:"FromUserName"`      // 消息的发送者
+	CreateTime   int    `json:"CreateTime"`        // 消息的创建时间
+	MsgType      string `json:"MsgType"`           // 消息类型 // text,image,voice
+	MsgID        int    `json:"MsgId"`             // messageID
+	Content      string `json:"Content,omitempty"` // 文本消息：文本消息的内容
+	PicUrl       string `json:"PicUrl,omitempty"`  // 图片消息：图片的url
+	MediaId      string `json:"MedisId,omitempty"` // 语音消息: mediaID
+	Format       string `json:"Format,omitempty"`  // 语音消息: 音频格式化类型mp3/wav/amr等
+}

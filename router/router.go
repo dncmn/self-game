@@ -48,6 +48,7 @@ func Router(r *gin.Engine) {
 		wechatGroup.GET("/download_media_by_audioid", handler.WechatDownloadMediaDataHandler) // 根据media_id下载音频数据
 		wechatGroup.POST("/send_template_info", handler.WechatSendTemplateInfoHandler)        // 发送模板消息
 		wechatGroup.GET("/jsconfig", handler.WechatGetJSConfigHandler)                        // 获取jsconfig
+		wechatGroup.POST("/receive_msg", handler.WechatReceiveMsgHandler)                     // 接收各种类型的消息
 	}
 
 	// 权限相关

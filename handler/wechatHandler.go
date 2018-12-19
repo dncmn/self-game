@@ -130,3 +130,31 @@ func WechatGetJSConfigHandler(c *gin.Context) {
 	logger.Infof("get jsconfig signature.baseURL=%v,signatureInfo=%v", baseURL, resp)
 	return
 }
+
+func WechatReceiveMsgHandler(c *gin.Context) {
+	retData := vo.NewData()
+	defer SendResponse(c, retData)
+	var (
+		body service.ReceiveMsgReq
+		err  error
+	)
+	if err = ParsePostBody(c, &body); err != nil {
+		retData.Code = gameCode.RequestParamsError
+		return
+	}
+
+	switch body.MsgType {
+	case "text": // 文本类型的消息
+	case "image": // 图片类型的消息
+	case "voice": // 声音类型的消息
+	default:
+		logger.Error(errors.New("undefined message type"))
+		retData.Code = gameCode.RequestParamsError
+		return
+	}
+
+	retData.Code = gameCode.RequestSuccess
+	retData.Data = "request success"
+	logger.Info(body)
+	return
+}
