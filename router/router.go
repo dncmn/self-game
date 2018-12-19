@@ -44,10 +44,10 @@ func Router(r *gin.Engine) {
 	// 微信相关
 	wechatGroup := cc.Group("/wechat")
 	{
-		wechatGroup.GET("/openid_by_code", handler.WechatAuthHandler) // code 换access_token或openid
-		wechatGroup.GET("/media_by_audioid",handler.WechatDownloadMediaDataHandler) // 根据media_id下载音频数据
-		wechatGroup.POST("/send_template_info",handler.WechatSendTemplateInfoHandler)// 发送模板消息
-		wechatGroup.GET("/jsconfig",handler.WechatGetJSConfigHandler) // 获取jsconfig
+		wechatGroup.GET("/accesstokne_by_code", handler.WechatAuthHandler)                    // code 换access_token或openid
+		wechatGroup.GET("/download_media_by_audioid", handler.WechatDownloadMediaDataHandler) // 根据media_id下载音频数据
+		wechatGroup.POST("/send_template_info", handler.WechatSendTemplateInfoHandler)        // 发送模板消息
+		wechatGroup.GET("/jsconfig", handler.WechatGetJSConfigHandler)                        // 获取jsconfig
 	}
 
 	// 权限相关
