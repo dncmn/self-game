@@ -56,11 +56,19 @@ func GetDB() (db *gorm.DB) {
 func Migrage() {
 	var err error
 	logs.Info("begin create table")
-	if err = globDb.AutoMigrate(&model.LogLogin{}).Error; err != nil {
+	if err = globlDbPg.AutoMigrate(&model.LogLogin{}).Error; err != nil {
 		log.Fatal(err)
 	}
 
-	if err = globDb.AutoMigrate(&model.User{}).Error; err != nil {
+	if err = globlDbPg.AutoMigrate(&model.User{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	if err = globlDbPg.AutoMigrate(&model.UserCourse{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	if err = globlDbPg.AutoMigrate(&model.LogUserSendMsgToWechat{}).Error; err != nil {
 		log.Fatal(err)
 	}
 

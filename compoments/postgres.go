@@ -60,6 +60,10 @@ func MigragePG() {
 		log.Fatal(err)
 	}
 
+	if err = globlDbPg.AutoMigrate(&model.LogUserSendMsgToWechat{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
 	logs.Info("end create table")
 }
 

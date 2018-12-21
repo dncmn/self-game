@@ -2,10 +2,12 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"self-game/constants/gameCode"
 	"self-game/service"
 	"self-game/utils"
+	"self-game/utils/async"
 	"self-game/utils/vo"
 )
 
@@ -51,7 +53,7 @@ func WechatDownloadMediaDataHandler(c *gin.Context) {
 		logger.Error(errors.New("param error"))
 		return
 	}
-	mp3Path, err = service.WechatDownAudioByAudioID(mediaID)
+	mp3Path, err = service.WechatDownAudioByMediaID(mediaID)
 	if err != nil {
 		retData.Code = gameCode.ErrorCodeWechatDownloadResourceByAudioID
 		logger.Error(errors.New("param error"))
@@ -161,13 +163,12 @@ func WechatReceiveMsgHandler(c *gin.Context) {
 
 func HandMessagesHandler(c *gin.Context) {
 	retData := vo.NewData()
-	defer SendResponse(c, retData)
 	var (
-		body       interface{}
-		content    = make([]byte, 0)
-		convertMap = make(map[string]string)
-		finalBody  service.XMLReq
-		err        error
+		body    interface{}
+		content = make([]byte, 0)
+		//convertMap = make(map[string]string)
+		finalBody service.XMLReq
+		err       error
 	)
 
 	// 获取xml中的请求体内容
@@ -177,23 +178,60 @@ func HandMessagesHandler(c *gin.Context) {
 		return
 	}
 	// 将xml转换为map
-	convertMap, err = utils.XmlToMap(content)
+	//convertMap, err = utils.XmlToMap(content)
+	//if err != nil {
+	//	retData.Code = gameCode.RequestParamsError
+	//	retData.Message = err.Error()
+	//	return
+	//}
+	//// map to struct
+	//err = utils.StructToMap(convertMap, &finalBody)
+	//if err != nil {
+	//	retData.Code = gameCode.RequestParamsError
+	//	retData.Message = err.Error()
+	//	return
+	//}
+	// xml bytes to struct
+	err = utils.XmlByteToStruct(content, finalBody)
 	if err != nil {
 		retData.Code = gameCode.RequestParamsError
 		retData.Message = err.Error()
-		return
-	}
-	// map to struct
-	err = utils.StructToMap(convertMap, &finalBody)
-	if err != nil {
-		retData.Code = gameCode.RequestParamsError
-		retData.Message = err.Error()
+		logger.Error(err)
 		return
 	}
 
-	retData.Code = gameCode.RequestSuccess
-	retData.Message = "request success"
-	retData.Data = finalBody
-	logger.Infof("finalBody=%s", finalBody)
+	// 对消息类型判断
+	cnt := "文本消息"
+	switch true {
+	case finalBody.MsgType == "text":
+		if finalBody.FromUserName == "oTVNt1dPSf0U7PLI0AytXfhZad0M" {
+			cnt = "我是大咪咪"
+		} else {
+			cnt = "文本消息:原来你说的是" + finalBody.Content
+		}
+	case finalBody.MsgType == "image":
+		cnt = "图片消息"
+	case finalBody.MsgType == "voice":
+		cnt = "声音消息"
+	case finalBody.MsgType == "video":
+		cnt = "小视频消息"
+	default:
+		cnt = "未识别类型"
+	}
+
+	// 记录发送消息的日志
+	go async.Do(func() {
+		err = service.WechatLogUserSendMstToWechat(finalBody)
+		if err != nil {
+			logger.Error(err)
+			return
+		}
+		logger.Infof("log msg success:openid=%s,msg_type=%s,msg_send_tme=%v",
+			finalBody.FromUserName, finalBody.MsgType, finalBody.CreateTime)
+	})
+
+	xmlStr := fmt.Sprintf("<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%v</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml><MsgId>%s</MsgId>",
+		finalBody.FromUserName, finalBody.ToUserName, finalBody.CreateTime, cnt, finalBody.MsgId)
+	c.Data(200, "", []byte(xmlStr))
 	return
 }

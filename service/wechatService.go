@@ -7,6 +7,7 @@ import (
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/mass/mass2all"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/template"
 	"gopkg.in/chanxuehong/wechat.v2/mp/user"
+	"self-game/model"
 	"sort"
 	"strconv"
 	"strings"
@@ -22,7 +23,6 @@ import (
 	"self-game/constants"
 	"self-game/constants/redisKey"
 	"self-game/utils"
-	"self-game/utils/async"
 	"time"
 )
 
@@ -35,9 +35,9 @@ var (
 )
 
 func init() {
-	go async.Do(func() {
-		initService()
-	})
+	//go async.Do(func() {
+	//	initService()
+	//})
 	ep = *mp.NewEndpoint(config.Config.Wechat.AppID, config.Config.Wechat.Secret)
 	oath2Client.Endpoint = &ep
 
@@ -101,8 +101,21 @@ func setUserAccessToken(token *oauth2.Token) (err error) {
 	return
 }
 
+// 下载图片资源
+func WechatDownImageByMediaID(mediaID string) (imgPath string, err error) {
+	fileName := utils.ReFileName(".jpg")
+	imgPath = path.Join(constants.WechatDownloadAmrLocalAddr, fileName)
+
+	_, err = media.Download(coreClient, mediaID, imgPath)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	return
+}
+
 // 下载音频数据
-func WechatDownAudioByAudioID(audioID string) (mp3Path string, err error) {
+func WechatDownAudioByMediaID(audioID string) (mp3Path string, err error) {
 	var (
 		fileName string
 		amrBytes = make([]byte, 0)
@@ -256,11 +269,41 @@ func WechatMassSendTextMsgByOpenID(message interface{}) (err error) {
 
 type XMLReq struct {
 	XMLName      interface{} `xml:"xml"`
-	Text         string      `xml:",chardata"`
-	ToUserName   string      `xml:"ToUserName"`
-	FromUserName string      `xml:"FromUserName"`
-	CreateTime   string      `xml:"CreateTime"`
-	MsgType      string      `xml:"MsgType"`
-	Content      string      `xml:"Content"`
-	MsgId        string      `xml:"MsgId"`
+	ToUserName   string      `xml:"ToUserName"`   // 发送者的openID
+	FromUserName string      `xml:"FromUserName"` // 公众号的名字
+	CreateTime   string      `xml:"CreateTime"`   // 发送消息的时间戳:1545396918
+	MsgType      string      `xml:"MsgType"`      // 消息的类型 test/audio/image
+	Content      string      `xml:"Content"`      // 文本消息类型的内容
+	MsgId        string      `xml:"MsgId"`        // 每个消息唯一的标识id
+	PicUrl       string      `xml:"PicUrl"`       // 图片的url
+	MediaId      string      `xml:"MediaId"`      // 媒介id(可以根据这个来下载资源)
+	Format       string      `xml:"Format"`       // 音频的格式amr格式的
+	Recognition  string      `xml:"Recognition"`  // 音频的翻译
+}
+
+// 记录用户向公众号发送消息的日志
+func WechatLogUserSendMstToWechat(body XMLReq) (err error) {
+	if body.MsgType != "text" && body.MsgType != "image" {
+		return
+	}
+
+	l := model.LogUserSendMsgToWechat{
+		OpenID:          body.FromUserName,
+		MsgType:         body.MsgType,
+		CreateTimeStamp: utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).Format(config.Config.Cfg.TimeModelStr),
+		MsgID:           body.MsgId,
+	}
+
+	if body.MsgType == "text" {
+		l.Content = body.Content
+	} else {
+		l.Content = body.PicUrl
+		l.MediaID = body.MediaId
+	}
+	err = gloDB.Create(&l).Error
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	return
 }

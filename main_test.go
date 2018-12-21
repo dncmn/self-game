@@ -246,3 +246,24 @@ func TestWechatMassSendInfo(t *testing.T) {
 	}
 	fmt.Println("success")
 }
+
+// 测试微信下载资源
+func TestWechatDownloadResource(t *testing.T) {
+	mediaID := "UEvKhiihBcKG9Dw9Ni6bsokY3LJIPfqVIVh80HTxfeKOTdVTlSHQZCH1ry5CIUPh"
+
+	imagePath, err := service.WechatDownImageByMediaID(mediaID)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println(imagePath)
+
+	//mediaID = "R4B686Pt7GDo0NUXsrK8qsIoywyx9Re4oMxW1OW1p-dRzLbroV0EBbTEMXI3u27E"
+	//mp3Path, err := service.WechatDownAudioByMediaID(mediaID)
+	//if err != nil {
+	//	t.Error(err)
+	//	return
+	//}
+	//fmt.Println("success")
+	//fmt.Println(mp3Path)
+}
