@@ -212,6 +212,12 @@ func HandMessagesHandler(c *gin.Context) {
 		cnt = fmt.Sprint("声音消息:刚刚你说的是", finalBody.Recognition)
 	case finalBody.MsgType == "video":
 		cnt = "小视频消息"
+	case finalBody.MsgType == "event": // 关注、取消关注事件      当用户关注公众号的时候,会进行一系列操作。然后取消公众号的时候,然后再进行一些删除数据的操作
+		if finalBody.Event == "subscribe" { // 关注公众号事件:主要进行一些数据的初始化操作
+			cnt = "Welcome to here!"
+		} else { // 取消关注:感觉是进行一些数据数据的删除，状态的修改操作。
+			cnt = "see you later!"
+		}
 	default:
 		cnt = "未识别类型"
 	}

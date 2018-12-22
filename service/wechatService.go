@@ -279,6 +279,8 @@ type XMLReq struct {
 	MediaId      string      `xml:"MediaId"`      // 媒介id(可以根据这个来下载资源)
 	Format       string      `xml:"Format"`       // 音频的格式amr格式的
 	Recognition  string      `xml:"Recognition"`  // 音频的翻译
+	Event        string      `xml:"Event"`        // 关注/取消关注事件
+	EventKey     interface{} `xml:"EventKey"`     // 绑定的时候传的参数,不知道这是啥
 }
 
 // 记录用户向公众号发送消息的日志
