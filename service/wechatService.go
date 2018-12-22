@@ -300,7 +300,7 @@ func WechatLogUserSendMstToWechat(body XMLReq) (err error) {
 		l.Content = body.PicUrl
 		l.MediaID = body.MediaId
 	}
-	err = gloDB.Create(&l).Error
+	err = pgDB.Create(&l).Error
 	if err != nil {
 		logger.Error(err)
 		return

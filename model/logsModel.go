@@ -21,7 +21,7 @@ type LogLogin struct {
 
 // 重命名表名
 func (this *LogLogin) TableName() string {
-	return "data.log_logins"
+	return "log_logins"
 }
 
 // 回调中设置主键
@@ -46,7 +46,7 @@ type LogUserSendMsgToWechat struct {
 
 // 重命名表名
 func (this *LogUserSendMsgToWechat) TableName() string {
-	return "data.logUserSendMsgToWechat"
+	return "logUserSendMsgToWechat"
 }
 
 // 回调中设置主键

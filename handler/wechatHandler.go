@@ -192,13 +192,14 @@ func HandMessagesHandler(c *gin.Context) {
 	//	return
 	//}
 	// xml bytes to struct
-	err = utils.XmlByteToStruct(content, finalBody)
+	err = utils.XmlByteToStruct(content, &finalBody)
 	if err != nil {
 		retData.Code = gameCode.RequestParamsError
 		retData.Message = err.Error()
 		logger.Error(err)
 		return
 	}
+	logger.Infof("finalBody=%v", finalBody.FromUserName)
 
 	// 对消息类型判断
 	cnt := "文本消息"
@@ -212,7 +213,7 @@ func HandMessagesHandler(c *gin.Context) {
 	case finalBody.MsgType == "image":
 		cnt = "图片消息"
 	case finalBody.MsgType == "voice":
-		cnt = "声音消息"
+		cnt = fmt.Sprint("声音消息:刚刚你说的是", finalBody.Recognition)
 	case finalBody.MsgType == "video":
 		cnt = "小视频消息"
 	default:
@@ -229,9 +230,14 @@ func HandMessagesHandler(c *gin.Context) {
 		logger.Infof("log msg success:openid=%s,msg_type=%s,msg_send_tme=%v",
 			finalBody.FromUserName, finalBody.MsgType, finalBody.CreateTime)
 	})
-
 	xmlStr := fmt.Sprintf("<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%v</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml><MsgId>%s</MsgId>",
 		finalBody.FromUserName, finalBody.ToUserName, finalBody.CreateTime, cnt, finalBody.MsgId)
+	if finalBody.MsgType == "image" { // 简单的设置
+		xmlStr = fmt.Sprintf("<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%v</CreateTime><MsgType><![CDATA[image]]></MsgType><Image><MediaId><![CDATA[%s]]></MediaId></Image></xml>",
+			finalBody.FromUserName, finalBody.ToUserName, finalBody.CreateTime, finalBody.MediaId)
+
+	}
+
 	c.Data(200, "", []byte(xmlStr))
 	return
 }
