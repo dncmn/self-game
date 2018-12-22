@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/xml"
 	"io"
-	"self-wechat/utils"
 	"strings"
 )
 
@@ -42,7 +41,7 @@ func XmlByteToStruct(bye []byte, rec interface{}) (err error) {
 		return
 	}
 	// map to struct
-	err = utils.StructToMap(convertMap, &rec)
+	err = StructToMap(convertMap, &rec)
 	if err != nil {
 		return
 	}
