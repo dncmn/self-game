@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"gopkg.in/chanxuehong/wechat.v2/mp/user"
 	"self-game/constants/gameCode"
 	"self-game/service"
 	"self-game/utils"
@@ -164,11 +165,11 @@ func WechatReceiveMsgHandler(c *gin.Context) {
 func HandMessagesHandler(c *gin.Context) {
 	retData := vo.NewData()
 	var (
-		body    interface{}
-		content = make([]byte, 0)
-		//convertMap = make(map[string]string)
+		body      interface{}
+		content   = make([]byte, 0)
 		finalBody service.XMLReq
 		err       error
+		userInfo  *user.UserInfo
 	)
 
 	// 获取xml中的请求体内容
@@ -177,20 +178,6 @@ func HandMessagesHandler(c *gin.Context) {
 		retData.Message = err.Error()
 		return
 	}
-	// 将xml转换为map
-	//convertMap, err = utils.XmlToMap(content)
-	//if err != nil {
-	//	retData.Code = gameCode.RequestParamsError
-	//	retData.Message = err.Error()
-	//	return
-	//}
-	//// map to struct
-	//err = utils.StructToMap(convertMap, &finalBody)
-	//if err != nil {
-	//	retData.Code = gameCode.RequestParamsError
-	//	retData.Message = err.Error()
-	//	return
-	//}
 	// xml bytes to struct
 	err = utils.XmlByteToStruct(content, &finalBody)
 	if err != nil {
@@ -200,6 +187,15 @@ func HandMessagesHandler(c *gin.Context) {
 		return
 	}
 	logger.Infof("finalBody=%v", finalBody.FromUserName)
+
+	// 获取发送者的消息
+	userInfo, err = service.WechatGetUserInfoByOpenID(finalBody.FromUserName)
+	if err != nil {
+		retData.Code = gameCode.RequestParamsError
+		retData.Message = err.Error()
+		logger.Error(err)
+		return
+	}
 
 	// 对消息类型判断
 	cnt := "文本消息"
@@ -220,6 +216,8 @@ func HandMessagesHandler(c *gin.Context) {
 		cnt = "未识别类型"
 	}
 
+	cnt = fmt.Sprint(userInfo.Nickname, " send msg:content:", cnt)
+
 	// 记录发送消息的日志
 	go async.Do(func() {
 		err = service.WechatLogUserSendMstToWechat(finalBody)
@@ -235,9 +233,7 @@ func HandMessagesHandler(c *gin.Context) {
 	if finalBody.MsgType == "image" { // 简单的设置
 		xmlStr = fmt.Sprintf("<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%v</CreateTime><MsgType><![CDATA[image]]></MsgType><Image><MediaId><![CDATA[%s]]></MediaId></Image></xml>",
 			finalBody.FromUserName, finalBody.ToUserName, finalBody.CreateTime, finalBody.MediaId)
-
 	}
-
 	c.Data(200, "", []byte(xmlStr))
 	return
 }
