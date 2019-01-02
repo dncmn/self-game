@@ -107,6 +107,9 @@ func WechatSendTemplateInfoHandler(c *gin.Context) {
 	return
 }
 
+/*
+	获取认证的时候,注意参数的顺序。如果顺序不对，即使程序没有报错,前端也会无法进行录音操作
+*/
 func WechatGetJSConfigHandler(c *gin.Context) {
 	retData := vo.NewData()
 	defer SendResponse(c, retData)
