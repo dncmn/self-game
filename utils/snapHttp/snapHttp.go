@@ -1,6 +1,7 @@
 package snapHttp
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"io"
 	"io/ioutil"
@@ -74,11 +75,15 @@ func (p *SnapHttp) SendReq(method string, url string, body io.Reader, target int
 		timeout = time.Duration(5 * time.Second)
 	}
 
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
 	// 重试处理
 	for i := 0; i <= p.ReSend; i++ {
 
 		client := http.Client{
-			Timeout: timeout,
+			Timeout:   timeout,
+			Transport: tr,
 		}
 
 		req, err = http.NewRequest(method, url, body)
