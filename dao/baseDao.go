@@ -16,5 +16,5 @@ var (
 func init() {
 	db = compoments.GetDB()
 	redisClient = compoments.GetRedisClient()
-	pgdb = compoments.GetPGDB()
+	//pgdb = compoments.GetPGDB()
 }
