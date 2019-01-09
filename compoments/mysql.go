@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"self-game/config"
+	"self-game/model"
 	"self-game/utils/logging"
 )
 
@@ -53,23 +54,23 @@ func GetDB() (db *gorm.DB) {
 }
 
 func Migrage() {
-	//var err error
+	var err error
 	logs.Info("begin create table")
-	//if err = globlDbPg.AutoMigrate(&model.LogLogin{}).Error; err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//if err = globlDbPg.AutoMigrate(&model.User{}).Error; err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//if err = globlDbPg.AutoMigrate(&model.UserCourse{}).Error; err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//if err = globlDbPg.AutoMigrate(&model.LogUserSendMsgToWechat{}).Error; err != nil {
-	//	log.Fatal(err)
-	//}
+	if err = globDb.AutoMigrate(&model.LogLogin{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	if err = globDb.AutoMigrate(&model.User{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	if err = globDb.AutoMigrate(&model.UserCourse{}).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	if err = globDb.AutoMigrate(&model.LogUserSendMsgToWechat{}).Error; err != nil {
+		log.Fatal(err)
+	}
 
 	logs.Info("end create table")
 }
