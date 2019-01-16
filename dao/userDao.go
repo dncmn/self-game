@@ -51,11 +51,9 @@ func SetUserIDByToken(uid, token string) (err error) {
 // 插入到数据库
 func InserUserToDB(username, password, mobile, timezone string, sex constants.UserSexType) (uid string, err error) {
 	user := model.User{
-		UserName:     username,
-		Password:     password,
-		Mobile:       mobile,
-		Sex:          sex,
-		RegosterTime: utils.GetTimeZoneTime(timezone).Unix(),
+		UserName: username,
+		Mobile:   mobile,
+		Sex:      sex,
 	}
 	err = db.Create(&user).Error
 	if err != nil {

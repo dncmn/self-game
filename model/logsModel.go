@@ -19,17 +19,6 @@ type LogLogin struct {
 	DeletedAt *time.Time `sql:"index"`
 }
 
-// 重命名表名
-func (this *LogLogin) TableName() string {
-	return "log_logins"
-}
-
-// 回调中设置主键
-func (this *LogLogin) BeforeCreate(scope *gorm.Scope) {
-	ui, _ := uuid.NewV4()
-	_ = scope.SetColumn("ID", ui.String())
-}
-
 // 记录用户向公众号发送消息的记录
 type LogUserSendMsgToWechat struct {
 	ID              string `gorm:"primary_key;"`
@@ -51,6 +40,17 @@ func (this *LogUserSendMsgToWechat) TableName() string {
 
 // 回调中设置主键
 func (this *LogUserSendMsgToWechat) BeforeCreate(scope *gorm.Scope) {
+	ui, _ := uuid.NewV4()
+	_ = scope.SetColumn("ID", ui.String())
+}
+
+// 重命名表名
+func (this *LogLogin) TableName() string {
+	return "log_logins"
+}
+
+// 回调中设置主键
+func (this *LogLogin) BeforeCreate(scope *gorm.Scope) {
 	ui, _ := uuid.NewV4()
 	_ = scope.SetColumn("ID", ui.String())
 }

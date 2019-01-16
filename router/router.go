@@ -14,8 +14,8 @@ func Router(r *gin.Engine) {
 	r.StaticFS("/compoments/runtime/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 	wxServerCheck := r.Group("/api/v2")
 	{
-		wxServerCheck.GET("/check", handler.HandlerSignatureHandler)
-		wxServerCheck.POST("/check", handler.HandMessagesHandler) // 被动回复消息
+		wxServerCheck.GET("/check", handler.HandlerSignatureHandler) // 在官网上配置服务器签名
+		wxServerCheck.POST("/check", handler.HandMessagesHandler)    // 被动回复消息
 
 	}
 
@@ -55,7 +55,7 @@ func Router(r *gin.Engine) {
 	// 权限相关
 	powerGroup := cc.Group("/power")
 	{
-		powerGroup.GET("/list:uid")
+		powerGroup.GET("/list:uid", handler.GetUserPowerListHandler) // 列举某个用户的权限
 	}
 
 	err := r.Run(fmt.Sprintf(":%d", config.Config.Cfg.Port))

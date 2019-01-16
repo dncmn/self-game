@@ -71,6 +71,9 @@ func Migrage() {
 	if err = globDb.AutoMigrate(&model.LogUserSendMsgToWechat{}).Error; err != nil {
 		log.Fatal(err)
 	}
+	if err = globDb.AutoMigrate(&model.UserRegister{}).Error; err != nil {
+		log.Fatal(err)
+	}
 
 	logs.Info("end create table")
 }

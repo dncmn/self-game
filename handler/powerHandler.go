@@ -5,7 +5,7 @@ import (
 	"self-game/utils/vo"
 )
 
-func GetUserPowerList(c *gin.Context) {
+func GetUserPowerListHandler(c *gin.Context) {
 	retData := vo.NewData()
 	defer SendResponse(c, retData)
 
