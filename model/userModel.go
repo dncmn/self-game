@@ -9,6 +9,7 @@ import (
 
 type User struct {
 	ID        string                `gorm:"column:id;type:varchar(40);primary_key;" `
+	UID       string                `gorm:"column:uid"`
 	UserName  string                `gorm:"column:user_name;type:varchar(40);"`
 	Sex       constants.UserSexType `gorm:"column:sex"`
 	Country   string                `gorm:"column:country"`
@@ -21,10 +22,11 @@ type User struct {
 
 type UserRegister struct {
 	ID           string `gorm:"column:id;type:varchar(40);primary_key;" `
-	UserName     string `gorm:"column:user_name;comment:'用户名'"` // 用户名
-	Password     string `gorm:"column:password;"`               //  用户注册的密码
-	RegisterIP   string `gorm:"column:register_ip;"`            // 用户注册时的ip
-	RegisterTime int64  `gorm:"column:register_time"`           // 注册的时间戳
+	UserName     string `gorm:"column:user_name;comment:'用户名'"`          // 用户名
+	Password     string `gorm:"column:password;"`                        //  用户注册的密码
+	RegisterIP   string `gorm:"column:register_ip;"`                     // 用户注册时的ip
+	RegisterTime int64  `gorm:"column:register_time"`                    // 注册的时间戳
+	User         User   `gorm:"ForeignKey:ID;AssociationForeignKey:UID"` // ForeignKey:指的是User表中的关联的key,AssociationForeignKey:UserRegister的关联的id
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    *time.Time `sql:"index"`
@@ -45,7 +47,7 @@ type UserCourse struct {
 
 // 重命名表名
 func (this *UserRegister) TableName() string {
-	return "user_gister"
+	return "user_register"
 }
 
 // 回调中设置主键

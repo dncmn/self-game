@@ -267,3 +267,19 @@ func TestWechatDownloadResource(t *testing.T) {
 	//fmt.Println("success")
 	//fmt.Println(mp3Path)
 }
+
+// 测试关联查询
+func TestLinkSearch(t *testing.T) {
+	var (
+		db   = compoments.GetDB()
+		user model.UserRegister
+		err  error
+	)
+
+	err = db.Where("user_name=?", "manan01").Preload("User").First(&user).Error
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println(fmt.Sprintf("uid=%v,name=%v,country=%v,sex=%v", user.ID, user.User.UserName, user.User.Country, user.User.Sex))
+}
