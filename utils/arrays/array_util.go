@@ -41,5 +41,4 @@ func FindDiffEles(max, min []int) (result []int) {
 		}
 	}
 	return result
-	return
 }
