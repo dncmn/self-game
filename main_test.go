@@ -320,11 +320,17 @@ func TestXORM(t *testing.T) {
 		t.Error(err)
 		return
 	}
+	engine.SetMaxIdleConns(200)
+	engine.SetMaxOpenConns(20)
+	engine.SetConnMaxLifetime(10)
+
+	engine.ShowSQL(true)
 	err = engine.Ping()
 	if err != nil {
 		t.Error(err)
 		return
 	}
+
 	fmt.Println("success")
 	//var is_pay bool
 	//has, err := engine.Where("uid=? and course_id=?",
