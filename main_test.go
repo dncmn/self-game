@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/xormplus/xorm"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/mass/mass2all"
 	"net/url"
 	"self-game/compoments"
@@ -305,4 +306,35 @@ func TestLinkSearch(t *testing.T) {
 		return
 	}
 	fmt.Println(fmt.Sprintf("uid=%v,name=%v,country=%v,sex=%v", user.ID, user.User.UserName, user.User.Country, user.User.Sex))
+}
+
+func TestXORM(t *testing.T) {
+	var (
+		engine *xorm.Engine
+		err    error
+		//logs   = logging.GetGormLogger()
+	)
+
+	engine, err = xorm.NewEngine("mysql", "root:password@tcp(127.0.0.1:3306)/game?charset=utf8&parseTime=True&loc=Local")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	err = engine.Ping()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Println("success")
+	//var is_pay bool
+	//has, err := engine.Where("uid=? and course_id=?",
+	//	"65fd2df7-cbf6-43a7-b746-534fc86d38a9", 100001).Cols("is_pay").Get(&is_pay)
+	//if err != nil {
+	//	t.Error(err)
+	//	return
+	//}
+	//
+	//if has {
+	//	fmt.Println(is_pay)
+	//}
 }
