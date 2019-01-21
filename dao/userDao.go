@@ -11,8 +11,7 @@ import (
 
 // 查找登录日志
 func GetUserLoginLogByUIDAndLimitDao(uid string, limit int) (data []model.LogLogin, err error) {
-	err = pgdb.Where("uid=?", uid).Order("login_time desc").Limit(limit).Find(&data).Error // pg连接不同数据库会报错,mysql可以
-	//err = db.Where("uid=?", uid).Order("login_time desc").Limit(limit).Find(&data).Error
+	err = db.Where("uid=?", uid).Order("login_time desc").Limit(limit).Find(&data).Error
 	return
 }
 

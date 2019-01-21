@@ -268,7 +268,30 @@ func TestWechatDownloadResource(t *testing.T) {
 	//fmt.Println(mp3Path)
 }
 
-// 测试关联查询
+// 测试关联查询--(一对多)
+func TestLinkOneToMany(t *testing.T) {
+	var (
+		err     error
+		db      = compoments.GetDB()
+		courses = make([]model.UserCourse, 0)
+		user    = model.User{UID: "65fd2df7-cbf6-43a7-b746-534fc86d38a9"}
+	)
+
+	if db.Model(&user).Related(&courses, "Courses").RecordNotFound() {
+		t.Error(err)
+		return
+	}
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	for _, c := range courses {
+		fmt.Println(fmt.Sprintf("uid=%v,courseID=%v", c.UID, c.CourseID))
+	}
+}
+
+// 测试关联查询---(一对一)
 func TestLinkSearch(t *testing.T) {
 	var (
 		db   = compoments.GetDB()

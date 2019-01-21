@@ -15,6 +15,7 @@ type User struct {
 	Country   string                `gorm:"column:country"`
 	City      string                `gorm:"column:city"`
 	Mobile    string                `gorm:"column:mobile"`
+	Courses   []*UserCourse         `gorm:"ForeignKey:UID;AssociationForeignKey:UID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt *time.Time `sql:"index"`
