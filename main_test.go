@@ -2,11 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/fsnotify/fsnotify"
+	"github.com/spf13/viper"
 	"github.com/xormplus/xorm"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/mass/mass2all"
+	"log"
 	"net/url"
 	"self-game/compoments"
 	"self-game/config"
+	c "self-game/config"
 	"self-game/constants"
 	"self-game/constants/redisKey"
 	"self-game/model"
@@ -18,6 +22,38 @@ import (
 	"testing"
 	"time"
 )
+
+func TestHotUpdated(t *testing.T) {
+	//func main() {
+	viper.SetConfigName("conf")
+	viper.AddConfigPath("./config")
+	viper.AddConfigPath(".")
+	viper.AutomaticEnv()
+	viper.SetConfigType("yaml")
+	var configuration c.Conf
+
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	err := viper.Unmarshal(&configuration)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	viper.WatchConfig()
+	viper.OnConfigChange(func(in fsnotify.Event) {
+		fmt.Println(in.Op.String())
+		if in.Op == fsnotify.Create || in.Op == fsnotify.Write {
+			if err := viper.Unmarshal(&configuration); err != nil {
+				log.Fatal(err)
+			}
+			fmt.Println(configuration.Development.Cfg.Port)
+		}
+	})
+	select {}
+}
 
 func TestBaiDuTranslate(t *testing.T) {
 	text := "hello"

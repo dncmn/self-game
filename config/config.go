@@ -1,14 +1,47 @@
 package config
 
 import (
+	"fmt"
+	"github.com/fsnotify/fsnotify"
+	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"os"
 	"self-game/utils"
+	"self-game/utils/async"
 	"time"
 )
 
+func watchAndUpdateConfig() {
+	viper.SetConfigName("conf")
+	viper.AddConfigPath("./config")
+	viper.AddConfigPath(".")
+	viper.AutomaticEnv()
+	viper.SetConfigType("yaml")
+	var configuration Conf
+
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	err := viper.Unmarshal(&configuration)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	viper.WatchConfig()
+	viper.OnConfigChange(func(in fsnotify.Event) {
+		fmt.Println(in.Op.String())
+		if in.Op == fsnotify.Create || in.Op == fsnotify.Write {
+			if err := viper.Unmarshal(&configuration); err != nil {
+				log.Fatal(err)
+			}
+			fmt.Println(configuration.Development.Cfg.Port)
+		}
+	})
+}
 func init() {
 	allConf := new(Conf)
 
@@ -44,6 +77,10 @@ func init() {
 	default:
 		Config = allConf.Development
 	}
+
+	go async.Do(func() {
+		watchAndUpdateConfig()
+	})
 }
 
 var Config ConfigItem
