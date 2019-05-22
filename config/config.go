@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func watchAndUpdateConfig() {
+func watchAndUpdateConfig(env string) {
 	viper.SetConfigName("conf")
 	viper.AddConfigPath("./config")
 	viper.AddConfigPath(".")
@@ -38,7 +38,14 @@ func watchAndUpdateConfig() {
 			if err := viper.Unmarshal(&configuration); err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println(configuration.Development.Cfg.Port)
+			switch env {
+			case "test", "":
+				Config = configuration.Test
+			case "production":
+				Config = configuration.Production
+			default:
+				Config = configuration.Development
+			}
 		}
 	})
 }
@@ -79,7 +86,7 @@ func init() {
 	}
 
 	go async.Do(func() {
-		watchAndUpdateConfig()
+		watchAndUpdateConfig(env)
 	})
 }
 
