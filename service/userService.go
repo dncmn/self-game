@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"self-game/config"
 	"self-game/constants"
@@ -28,6 +29,17 @@ func GetUserLoginLogService(uid string, n int) (resp UserLoginLogResp, err error
 	var (
 		dbLogs []model.LogLogin
 	)
+
+	var (
+		courses = make([]model.UserCourse, 0)
+		user    = model.User{UID: "65fd2df7-cbf6-43a7-b746-534fc86d38a9"}
+	)
+
+	gloDB.Model(&user).Related(&courses, "Courses")
+
+	for _, c := range courses {
+		fmt.Println(fmt.Sprintf("uid=%v,courseID=%v", c.UID, c.CourseID))
+	}
 
 	resp.UID = uid
 	dbLogs, err = dao.GetUserLoginLogByUIDAndLimitDao(uid, n)

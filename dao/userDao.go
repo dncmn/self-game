@@ -12,7 +12,6 @@ import (
 // 查找登录日志
 func GetUserLoginLogByUIDAndLimitDao(uid string, limit int) (data []model.LogLogin, err error) {
 	err = db.Where("uid=?", uid).Order("login_time desc").Limit(limit).Find(&data).Error
-	db.Model(&model.User{}).Related(&model.UserCourse{})
 	return
 }
 

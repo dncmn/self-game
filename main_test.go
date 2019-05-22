@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/xormplus/xorm"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/mass/mass2all"
 	"net/url"
 	"self-game/compoments"
@@ -268,7 +269,30 @@ func TestWechatDownloadResource(t *testing.T) {
 	//fmt.Println(mp3Path)
 }
 
-// 测试关联查询
+// 测试关联查询--(一对多)
+func TestLinkOneToMany(t *testing.T) {
+	var (
+		err     error
+		db      = compoments.GetDB()
+		courses = make([]model.UserCourse, 0)
+		user    = model.User{UID: "65fd2df7-cbf6-43a7-b746-534fc86d38a9"}
+	)
+
+	if db.Model(&user).Related(&courses, "Courses").RecordNotFound() {
+		t.Error(err)
+		return
+	}
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	for _, c := range courses {
+		fmt.Println(fmt.Sprintf("uid=%v,courseID=%v", c.UID, c.CourseID))
+	}
+}
+
+// 测试关联查询---(一对一)
 func TestLinkSearch(t *testing.T) {
 	var (
 		db   = compoments.GetDB()
@@ -282,4 +306,41 @@ func TestLinkSearch(t *testing.T) {
 		return
 	}
 	fmt.Println(fmt.Sprintf("uid=%v,name=%v,country=%v,sex=%v", user.ID, user.User.UserName, user.User.Country, user.User.Sex))
+}
+
+func TestXORM(t *testing.T) {
+	var (
+		engine *xorm.Engine
+		err    error
+		//logs   = logging.GetGormLogger()
+	)
+
+	engine, err = xorm.NewEngine("mysql", "root:password@tcp(127.0.0.1:3306)/game?charset=utf8&parseTime=True&loc=Local")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	engine.SetMaxIdleConns(200)
+	engine.SetMaxOpenConns(20)
+	engine.SetConnMaxLifetime(10)
+
+	engine.ShowSQL(true)
+	err = engine.Ping()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	fmt.Println("success")
+	//var is_pay bool
+	//has, err := engine.Where("uid=? and course_id=?",
+	//	"65fd2df7-cbf6-43a7-b746-534fc86d38a9", 100001).Cols("is_pay").Get(&is_pay)
+	//if err != nil {
+	//	t.Error(err)
+	//	return
+	//}
+	//
+	//if has {
+	//	fmt.Println(is_pay)
+	//}
 }
