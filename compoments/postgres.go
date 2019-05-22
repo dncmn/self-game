@@ -1,23 +1,20 @@
 package compoments
 
 import (
-	"fmt"
-	"github.com/jinzhu/gorm"
-	"self-game/config"
 	// 导入postgres驱动
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var (
-	pgdns = fmt.Sprintf(
-		"host=%s port=%d user=%s dbname=%s sslmode=disable password=%s ",
-		config.Config.Pgsql.Host,
-		config.Config.Pgsql.Port,
-		config.Config.Pgsql.Username,
-		config.Config.Pgsql.Dbname,
-		config.Config.Pgsql.Password,
-	)
-	globlDbPg *gorm.DB
+//pgdns = fmt.Sprintf(
+//	"host=%s port=%d user=%s dbname=%s sslmode=disable password=%s ",
+//	config.Config.Pgsql.Host,
+//	config.Config.Pgsql.Port,
+//	config.Config.Pgsql.Username,
+//	config.Config.Pgsql.Dbname,
+//	config.Config.Pgsql.Password,
+//)
+//globlDbPg *gorm.DB
 )
 
 //func init() {
