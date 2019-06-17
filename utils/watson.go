@@ -1,11 +1,11 @@
 package utils
 
 import (
+	"code.dncmn.io/self-game/utils/logging"
 	"fmt"
 	"github.com/liviosoares/go-watson-sdk/watson"
 	"github.com/liviosoares/go-watson-sdk/watson/text_to_speech"
 	"os"
-	"self-game/utils/logging"
 )
 
 var (

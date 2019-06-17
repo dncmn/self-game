@@ -22,7 +22,7 @@ const (
 	mBot  RedisModule = "bot"
 )
 const (
-	//ProjectApi self-game项目
+	//ProjectApi code.dncmn.io/self-game项目
 	ProjectApi Project = "self-game"
 )
 

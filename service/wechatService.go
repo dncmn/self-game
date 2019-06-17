@@ -1,17 +1,21 @@
 package service
 
 import (
+	"code.dncmn.io/self-game/model"
 	"crypto/tls"
 	"encoding/json"
 	"gopkg.in/chanxuehong/wechat.v2/mp/jssdk"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/mass/mass2all"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/template"
 	"gopkg.in/chanxuehong/wechat.v2/mp/user"
-	"self-game/model"
 	"sort"
 	"strconv"
 	"strings"
 
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/constants"
+	"code.dncmn.io/self-game/constants/redisKey"
+	"code.dncmn.io/self-game/utils"
 	"gopkg.in/chanxuehong/wechat.v2/mp/core"
 	"gopkg.in/chanxuehong/wechat.v2/mp/media"
 	mp "gopkg.in/chanxuehong/wechat.v2/mp/oauth2"
@@ -19,10 +23,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"path"
-	"self-game/config"
-	"self-game/constants"
-	"self-game/constants/redisKey"
-	"self-game/utils"
 	"time"
 )
 
@@ -148,7 +148,7 @@ func WechatDownAudioByMediaID(audioID string) (mp3Path string, err error) {
 // 上传到oss
 func WechatUploadAudioToOSS(mp3Path string) (resource_url string, err error) {
 	mp3Name := path.Base(mp3Path)
-	osskey := path.Join("self-game", strconv.FormatInt(utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).UnixNano(), 10), mp3Path, mp3Name)
+	osskey := path.Join("code.dncmn.io/self-game", strconv.FormatInt(utils.GetTimeZoneTime(config.Config.Cfg.TimeZone).UnixNano(), 10), mp3Path, mp3Name)
 	resource_url, err = utils.PutObject(mp3Path, osskey)
 	if err != nil {
 		logger.Error(err)

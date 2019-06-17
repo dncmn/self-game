@@ -1,14 +1,14 @@
 package controller
 
 import (
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/constants/gameCode"
+	"code.dncmn.io/self-game/utils"
+	"code.dncmn.io/self-game/utils/qrcode"
+	"code.dncmn.io/self-game/utils/vo"
 	"github.com/boombuler/barcode/qr"
 	"github.com/gin-gonic/gin"
 	"net/url"
-	"self-game/config"
-	"self-game/constants/gameCode"
-	"self-game/utils"
-	"self-game/utils/qrcode"
-	"self-game/utils/vo"
 )
 
 func GetCodeImageHandler(c *gin.Context) {

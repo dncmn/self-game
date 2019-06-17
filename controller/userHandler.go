@@ -1,19 +1,19 @@
 package controller
 
 import (
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/constants/gameCode"
+	"code.dncmn.io/self-game/dao"
+	"code.dncmn.io/self-game/model"
+	"code.dncmn.io/self-game/service"
+	"code.dncmn.io/self-game/utils"
+	"code.dncmn.io/self-game/utils/async"
+	"code.dncmn.io/self-game/utils/vo"
 	"errors"
 	"fmt"
 	"github.com/dncmn/bitset"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"self-game/config"
-	"self-game/constants/gameCode"
-	"self-game/dao"
-	"self-game/model"
-	"self-game/service"
-	"self-game/utils"
-	"self-game/utils/async"
-	"self-game/utils/vo"
 	"strconv"
 	"strings"
 )

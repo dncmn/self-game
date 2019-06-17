@@ -1,11 +1,11 @@
 package dao
 
 import (
+	"code.dncmn.io/self-game/constants"
+	"code.dncmn.io/self-game/constants/redisKey"
+	"code.dncmn.io/self-game/model"
+	"code.dncmn.io/self-game/utils"
 	"fmt"
-	"self-game/constants"
-	"self-game/constants/redisKey"
-	"self-game/model"
-	"self-game/utils"
 	"time"
 )
 

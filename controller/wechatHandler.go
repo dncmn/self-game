@@ -1,15 +1,15 @@
 package controller
 
 import (
+	"code.dncmn.io/self-game/constants/gameCode"
+	"code.dncmn.io/self-game/service"
+	"code.dncmn.io/self-game/utils"
+	"code.dncmn.io/self-game/utils/async"
+	"code.dncmn.io/self-game/utils/vo"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/chanxuehong/wechat.v2/mp/user"
-	"self-game/constants/gameCode"
-	"self-game/service"
-	"self-game/utils"
-	"self-game/utils/async"
-	"self-game/utils/vo"
 )
 
 // code exchange accessToken

@@ -1,12 +1,12 @@
 package main
 
 import (
+	"code.dncmn.io/self-game/router"
+	"code.dncmn.io/self-game/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"os"
 	"os/signal"
-	"self-game/router"
-	"self-game/service"
 )
 
 func main() {

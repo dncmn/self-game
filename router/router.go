@@ -1,13 +1,13 @@
 package router
 
 import (
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/controller"
+	_ "code.dncmn.io/self-game/dao"
+	"code.dncmn.io/self-game/utils/qrcode"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"self-game/config"
-	"self-game/controller"
-	_ "self-game/dao"
-	"self-game/utils/qrcode"
 )
 
 func Router(r *gin.Engine) {

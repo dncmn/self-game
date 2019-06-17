@@ -1,9 +1,9 @@
 package service
 
 import (
-	"self-game/compoments"
-	"self-game/constants"
-	"self-game/utils/logging"
+	"code.dncmn.io/self-game/compoments"
+	"code.dncmn.io/self-game/constants"
+	"code.dncmn.io/self-game/utils/logging"
 )
 
 var (

@@ -1,16 +1,16 @@
 package controller
 
 import (
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/constants/gameCode"
+	"code.dncmn.io/self-game/service"
+	"code.dncmn.io/self-game/utils"
+	"code.dncmn.io/self-game/utils/logging"
+	"code.dncmn.io/self-game/utils/vo"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
-	"self-game/config"
-	"self-game/constants/gameCode"
-	"self-game/service"
-	"self-game/utils"
-	"self-game/utils/logging"
-	"self-game/utils/vo"
 )
 
 var (

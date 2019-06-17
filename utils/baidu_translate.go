@@ -1,11 +1,11 @@
 package utils
 
 import (
-	"strings"
-	"strconv"
+	"code.dncmn.io/self-game/utils/snapHttp"
 	"fmt"
 	"math/rand"
-	"self-game/utils/snapHttp"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -45,8 +45,6 @@ func TranslaTate(text string) (resp BaiDuResp, err error) {
 
 	return
 }
-
-
 
 func IntRange(min, max int) int {
 	if min >= max {

@@ -1,9 +1,9 @@
 package dao
 
 import (
+	"code.dncmn.io/self-game/compoments"
+	"code.dncmn.io/self-game/utils/logging"
 	"github.com/jinzhu/gorm"
-	"self-game/compoments"
-	"self-game/utils/logging"
 )
 
 var (

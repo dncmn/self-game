@@ -1,10 +1,10 @@
 package compoments
 
 import (
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/constants/redisKey"
 	"github.com/go-redis/redis"
 	"log"
-	"self-game/config"
-	"self-game/constants/redisKey"
 	"time"
 )
 

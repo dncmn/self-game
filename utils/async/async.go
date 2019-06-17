@@ -3,7 +3,7 @@ package async
 import (
 	"runtime/debug"
 
-	"self-game/utils/logging"
+	"code.dncmn.io/self-game/utils/logging"
 )
 
 var logs = logging.GetLogger()

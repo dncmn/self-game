@@ -2,8 +2,8 @@ package bash
 
 import (
 	"bytes"
+	"code.dncmn.io/self-game/utils/logging"
 	"os/exec"
-	"self-game/utils/logging"
 )
 
 var logs = logging.GetLogger()

@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"code.dncmn.io/self-game/utils/vo"
 	"github.com/gin-gonic/gin"
-	"self-game/utils/vo"
 )
 
 func GetUserPowerListHandler(c *gin.Context) {

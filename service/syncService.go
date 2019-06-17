@@ -1,9 +1,9 @@
 package service
 
 import (
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/utils/async"
 	"fmt"
-	"self-game/config"
-	"self-game/utils/async"
 	"time"
 )
 

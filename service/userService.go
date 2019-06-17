@@ -1,15 +1,15 @@
 package service
 
 import (
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/constants"
+	"code.dncmn.io/self-game/dao"
+	"code.dncmn.io/self-game/model"
+	"code.dncmn.io/self-game/utils"
+	"code.dncmn.io/self-game/utils/taobaoIP"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"self-game/config"
-	"self-game/constants"
-	"self-game/dao"
-	"self-game/model"
-	"self-game/utils"
-	"self-game/utils/taobaoIP"
 	"strings"
 )
 

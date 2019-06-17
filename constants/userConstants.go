@@ -1,7 +1,7 @@
 package constants
 
 import (
-	//"self-game/config"
+	//"code.dncmn.io/self-game/config"
 	"time"
 )
 

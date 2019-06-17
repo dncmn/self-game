@@ -1,21 +1,20 @@
 package utils
 
 import (
+	"code.dncmn.io/self-game/constants"
+	"code.dncmn.io/self-game/utils/bash"
+	"code.dncmn.io/self-game/utils/logging"
 	"fmt"
 	"io/ioutil"
 	"path"
-	"self-game/constants"
-	"self-game/utils/logging"
 	"strings"
-	"self-game/utils/bash"
 )
 
 var logs = logging.GetLogger()
 
 var (
-	fpath      = "ffmpeg "
+	fpath = "ffmpeg "
 )
-
 
 // audio to mp3
 const (

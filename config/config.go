@@ -1,6 +1,8 @@
 package config
 
 import (
+	"code.dncmn.io/self-game/utils"
+	"code.dncmn.io/self-game/utils/async"
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
@@ -8,8 +10,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"self-game/utils"
-	"self-game/utils/async"
 	"time"
 )
 

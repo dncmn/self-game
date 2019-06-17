@@ -2,14 +2,14 @@ package compoments
 
 import (
 	// 导入mysql驱动
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/model"
+	"code.dncmn.io/self-game/utils/logging"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 	"os"
-	"self-game/config"
-	"self-game/model"
-	"self-game/utils/logging"
 )
 
 var (

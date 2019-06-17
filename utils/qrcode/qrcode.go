@@ -6,11 +6,11 @@ import (
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/qr"
 
+	"code.dncmn.io/self-game/config"
+	"code.dncmn.io/self-game/utils"
+	"code.dncmn.io/self-game/utils/logging"
 	"github.com/tuotoo/qrcode"
 	"os"
-	"self-game/config"
-	"self-game/utils"
-	"self-game/utils/logging"
 )
 
 var (

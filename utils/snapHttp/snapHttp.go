@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"self-game/utils/logging"
+	"code.dncmn.io/self-game/utils/logging"
 )
 
 var logs = logging.GetLogger()
