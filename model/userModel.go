@@ -1,7 +1,7 @@
 package model
 
 import (
-	"code.dncmn.io/self-game/constants"
+	"code.dncmn.io/self-game/data/constants"
 	"github.com/jinzhu/gorm"
 	"github.com/satori/go.uuid"
 	"time"

@@ -2,7 +2,7 @@ package service
 
 import (
 	"code.dncmn.io/self-game/compoments"
-	"code.dncmn.io/self-game/constants"
+	"code.dncmn.io/self-game/data/constants"
 	"code.dncmn.io/self-game/utils/logging"
 )
 

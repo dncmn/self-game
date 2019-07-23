@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"code.dncmn.io/self-game/constants"
 	"code.dncmn.io/self-game/constants/redisKey"
+	"code.dncmn.io/self-game/data/constants"
 	"code.dncmn.io/self-game/model"
 	"code.dncmn.io/self-game/utils"
 	"fmt"

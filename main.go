@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "code.dncmn.io/self-game/cmd/user"
 	"code.dncmn.io/self-game/router"
 	"code.dncmn.io/self-game/service"
 	"fmt"

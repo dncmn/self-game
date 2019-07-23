@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"code.dncmn.io/self-game/cmd"
 	"code.dncmn.io/self-game/config"
 	"code.dncmn.io/self-game/constants/gameCode"
 	"code.dncmn.io/self-game/dao"
@@ -43,7 +44,8 @@ func GetUserLoginHandler(c *gin.Context) {
 		return
 	}
 
-	if res, err = service.GetUserLoginLogService(uid, n); err != nil {
+	var u cmd.IUser
+	if res, err = cmd.IUser.GetUserLoginLogService(u, uid, n); err != nil {
 		err = errors.New("params error")
 		retData.Code = gameCode.RequestParamsError
 		retData.Data = err

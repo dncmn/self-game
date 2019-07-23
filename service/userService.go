@@ -2,66 +2,15 @@ package service
 
 import (
 	"code.dncmn.io/self-game/config"
-	"code.dncmn.io/self-game/constants"
 	"code.dncmn.io/self-game/dao"
+	"code.dncmn.io/self-game/data/constants"
 	"code.dncmn.io/self-game/model"
 	"code.dncmn.io/self-game/utils"
 	"code.dncmn.io/self-game/utils/taobaoIP"
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"strings"
 )
-
-type UserLoginLogResp struct {
-	UID      string      `json:"uid"`
-	UserName string      `json:"user_name"`
-	IsLogin  bool        `json:"is_login"`
-	Logs     []loginInfo `json:"logs"`
-}
-
-type loginInfo struct {
-	LoginTime interface{} `json:"login_time"`
-	LoginIP   string      `json:"login_ip"`
-}
-
-func GetUserLoginLogService(uid string, n int) (resp UserLoginLogResp, err error) {
-	var (
-		dbLogs []model.LogLogin
-	)
-
-	var (
-		courses = make([]model.UserCourse, 0)
-		user    = model.User{UID: "65fd2df7-cbf6-43a7-b746-534fc86d38a9"}
-	)
-
-	gloDB.Model(&user).Related(&courses, "Courses")
-
-	for _, c := range courses {
-		fmt.Println(fmt.Sprintf("uid=%v,courseID=%v", c.UID, c.CourseID))
-	}
-
-	resp.UID = uid
-	dbLogs, err = dao.GetUserLoginLogByUIDAndLimitDao(uid, n)
-	if err != nil {
-		logger.Error(err)
-		return
-	}
-	if len(dbLogs) == 0 {
-		resp.IsLogin = false
-		return
-	}
-	resp.UserName = dbLogs[0].UserName
-	resp.IsLogin = true
-	for _, l := range dbLogs {
-		res := loginInfo{
-			LoginIP:   l.LoginIP,
-			LoginTime: l.CreatedAt.Format(config.Config.Cfg.TimeModelStr),
-		}
-		resp.Logs = append(resp.Logs, res)
-	}
-	return
-}
 
 func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, nonce string, err error) {
 	if signature = c.Query("signature"); strings.TrimSpace(signature) == "" {

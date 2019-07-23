@@ -1,6 +1,7 @@
 package service
 
 import (
+	"code.dncmn.io/self-game/data/constants"
 	"code.dncmn.io/self-game/model"
 	"crypto/tls"
 	"encoding/json"
@@ -13,7 +14,6 @@ import (
 	"strings"
 
 	"code.dncmn.io/self-game/config"
-	"code.dncmn.io/self-game/constants"
 	"code.dncmn.io/self-game/constants/redisKey"
 	"code.dncmn.io/self-game/utils"
 	"gopkg.in/chanxuehong/wechat.v2/mp/core"
